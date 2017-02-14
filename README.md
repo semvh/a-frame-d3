@@ -1,5 +1,5 @@
 # A-Frame combined with D3
 
-Trying to get the latest version of A-frame running with the latest version of D3.
+Latest versions of A-frame and D3 running together. Building a chart.
 
 
