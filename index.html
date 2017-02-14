@@ -60,9 +60,9 @@
 
       boxes.attr({
         position: function(d,i) {
-          var x = i * 1.5;
+          var x = i * 1.5 - data.length/1.5;
           var y = hscale(d)/2;;
-          var z = -4;
+          var z = -15;
           return x + " " + y + " " + z
         },
         
