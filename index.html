@@ -45,9 +45,7 @@
 
     <script>
       // fake data
-      var data = [ 10, 20, 30, 15, 25, 35, 40,
-                  45, 50, 70, 100, 120, 130,
-                 12, 18, 22, 29, 33, 44, 59, 200]
+      var data = [ 10, 20, 30 ]
 
       var hscale = d3.scale.linear()
           .domain([0, d3.max(data)])
@@ -60,7 +58,7 @@
 
       boxes.attr({
         position: function(d,i) {
-          var x = i * 1.5 - data.length/1.5;
+          var x = i * 1.5;
           var y = hscale(d)/2;;
           var z = -15;
           return x + " " + y + " " + z
