@@ -6,12 +6,17 @@
     <meta name="description" content="A-frame and D3">
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
 
+    <!-- Fixed D3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- Deze heb je nodig om multi attrs te gebruiken -->
+    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+
     <!-- New D3 -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script> -->
 
     <!-- Old D3 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script> -->
+
     <style>
       body {
         margin: 0;
@@ -26,7 +31,7 @@
   </head>
   <body>
     <a-scene>
-      
+
       <!-- Camera -->
 
       <a-entity position="0 0.5 0">
@@ -36,7 +41,7 @@
       </a-entity>
 
       <!-- Box (not used) -->
-      
+
       <!-- <a-box position="-1.5 0 -4" scale="1" color="teal"></a-box> -->
 
 
@@ -49,23 +54,24 @@
                   45, 50, 70, 100, 120, 130,
                  12, 18, 22, 29, 33, 44, 59, 200]
 
-      var hscale = d3.scale.linear()
+      var hscale = d3.scaleLinear()
           .domain([0, d3.max(data)])
           .range([0,5])
 
       var scene = d3.select("a-scene");
-      
+
       var boxes = scene.selectAll("a-box.bar").data(data);
       boxes.enter().append("a-box").classed("bar", true)
 
-      boxes.attr({
+        // attr is vervangen door attrs, daarnaast is deze functie verplaatst naar een aparte script
+      boxes.attrs({
         position: function(d,i) {
           var x = i * 1.5;
           var y = hscale(d)/2;;
           var z = -4;
           return x + " " + y + " " + z
         },
-        
+
         height: function(d,i) {
           return hscale(d)
         },
@@ -73,6 +79,7 @@
         color: "#e8431f"
 
       })
+      boxes.styles({"color": "#e8431f"}) // ??? Zie geen boxes
 
 
 
