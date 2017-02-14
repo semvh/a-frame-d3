@@ -50,39 +50,34 @@
 
     <script>
       // fake data
-      var data = [ 10, 20, 30, 15, 25, 35, 40,
-                  45, 50, 70, 100, 120, 130,
-                 12, 18, 22, 29, 33, 44, 59, 200]
+        var data = [ 10, 20, 30, 15, 25, 35, 40,
+              45, 50, 70, 100, 120, 130,
+             12, 18, 22, 29, 33, 44, 59, 200]
 
-      var hscale = d3.scaleLinear()
-          .domain([0, d3.max(data)])
-          .range([0,5])
+        var hscale = d3.scaleLinear()
+            .domain([0, d3.max(data)])
+            .range([0,5])
 
-      var scene = d3.select("a-scene");
+        var scene = d3.select("a-scene");
 
-      var boxes = scene.selectAll("a-box.bar").data(data);
-      boxes.enter().append("a-box").classed("bar", true)
+        var boxes = scene.selectAll("a-box.bar").data(data);
+        boxes.enter().append("a-box").classed("bar", true)
+            // attr is veranderd naar attrs en de functie is verplaatst naar een aparte script
+            .attrs({
+                position: function(d,i) {
+                var x = i * 1.5;
+                var y = hscale(d)/2;;
+                var z = -4;
+                return x + " " + y + " " + z
+            },
 
-        // attr is vervangen door attrs, daarnaast is deze functie verplaatst naar een aparte script
-      boxes.attrs({
-        position: function(d,i) {
-          var x = i * 1.5;
-          var y = hscale(d)/2;;
-          var z = -4;
-          return x + " " + y + " " + z
-        },
+            height: function(d,i) {
+                return hscale(d)
+            },
 
-        height: function(d,i) {
-          return hscale(d)
-        },
+            color: "#e8431f"
 
-        color: "#e8431f"
-
-      })
-      boxes.styles({"color": "#e8431f"}) // ??? Zie geen boxes
-
-
-
+        })
 
     </script>
   </body>
