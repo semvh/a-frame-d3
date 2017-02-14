@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>A-frame and D3</title>
     <meta name="description" content="A-frame and D3">
+
+    <!-- A-frame -->
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
 
     <!-- Fixed D3 -->
@@ -29,7 +31,7 @@
 
       <!-- Camera -->
 
-      <a-entity position="0 0.5 0">
+      <a-entity position="0 1.5 0">
         <a-entity camera="" look-controls="" wasd-controls="">
           <a-cursor color="#FFF"></a-cursor>
         </a-entity>
@@ -37,42 +39,58 @@
 
       <!-- Box (not used) -->
 
-      <!-- <a-box position="-1.5 0 -4" scale="1" color="teal"></a-box> -->
+      <a-box position="1.5 0 -5" scale="1" color="teal"></a-box>
 
 
       <a-sky color="#f1f1f1"></a-sky>
     </a-scene>
 
     <script>
-      // fake data
-        var data = [ 10, 20, 30 ]
+
+      d3.csv("data.csv", function(error, data) {
+
+        // fake data
+        // var data = [ 10, 20 ]
+
+        console.log(data);
 
         var hscale = d3.scaleLinear()
             .domain([0, d3.max(data)])
             .range([0,5])
 
-        var scene = d3.select("a-scene");
+        var scene = d3
+            .select("a-scene");
 
-        var boxes = scene.selectAll("a-box.bar").data(data);
-        boxes.enter().append("a-box").classed("bar", true)
+        var boxes = scene
+            .selectAll("a-box.bar")
+            .data(data)
+            .enter()
+            .append("a-box")
+            .classed("bar", true)
 
             // New attrs 
-
             .attrs({
-                position: function(d,i) {
-                var x = i * 1.5 - data.length / 2;
-                var y = hscale(d) / 2;;
-                var z = -15;
-                return x + " " + y + " " + z
+
+              position: function(d,i) {
+                  
+                console.log("i: " + i + " " + "d: " + d)
+
+                var x = 0;
+                var y = i * 1.2;
+                var z = -5;
+                return x + " " + y + " " + z;
+
             },
 
-            height: function(d,i) {
-                return hscale(d)
+              height: function(d,i) {
+                return 1;
+
             },
 
-            color: "#e8431f"
-
+              color: "#e8431f"
         })
+
+      });
 
     </script>
   </body>
