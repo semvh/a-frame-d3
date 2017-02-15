@@ -33,7 +33,7 @@
 
         <!-- Camera -->
 
-        <a-entity position="0 1.5 0">
+        <a-entity position="0 1.5 20">
             <a-entity camera="" look-controls="" wasd-controls="">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
@@ -50,7 +50,7 @@
     <script>
         d3.csv("data.csv", function(error, data) {
 
-            console.log(data);
+            // console.log(data);
 
             var hscale = d3.scaleLinear()
                 .domain([0, d3.max(data)])
@@ -58,7 +58,8 @@
 
             var scene = d3
                 .select("a-scene");
-            // console.log(data[0].aantalMannen);
+
+            // Empty Array that loads the data from the CSV
 
             var dataAmount = [];
             for(i=0; i<parseInt(data[0].aantalMannen); i++){
@@ -80,17 +81,11 @@
 
                     position: function(d, i) {
 
-                         console.log("i: " + i + " " + "d"  + d)
-                        //console.log(d.aantalMannen);
-                        /*for(var a in d){
-                            console.log(a + ", " +d[a]);
-                        }*/
-                        //console.log(d.aantalMannen)
+                        var blockSpace = i * 1.5;
 
-                        // for(x=0; x<d.aantalMannen; x++){
-                        //     d3.select(this).append("div");
-                        // }
-                        var x = i * 1.30;
+                        console.log(blockSpace)
+
+                        var x = blockSpace;
                         var y = 0;
                         var z = -5;
                         return x + " " + y + " " + z;
@@ -98,7 +93,7 @@
                     },
 
                     height: function(d, i) {
-                        return 1;
+                        return 2;
 
                     },
 
@@ -113,10 +108,8 @@
                         }
                     }
                 })
-
         });
     </script>
-    <div id="test"></div>
 </body>
 
 </html>
