@@ -33,7 +33,7 @@
 
         <!-- Camera -->
 
-        <a-entity position="0 1.5 0">
+        <a-entity position="0 1.5 4">
             <a-entity camera="" look-controls="" wasd-controls="">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
@@ -82,8 +82,8 @@
                     position: function(d, i) {
 
                         if (i >= 0 && i <= 29) {
-                            var radius = 10;
-                            var theta = (-i /30) * (2 * Math.PI)
+                            var radius = 13;
+                            var theta = (-i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 0;
@@ -93,8 +93,8 @@
                         }
 
                         else if (i > 29 && i <= 59) {
-                            var radius = 11.5;
-                            var theta = (-i /30) * (2 * Math.PI)
+                            var radius = 14.5;
+                            var theta = (i /60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 1.5;
@@ -104,8 +104,8 @@
                         }
 
                         else if (i > 59 && i <= 89) {
-                            var radius = 13;
-                            var theta = (-i /30) * (2 * Math.PI)
+                            var radius = 16;
+                            var theta = (-i /60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 3;
@@ -115,8 +115,8 @@
                         }
 
                         else if (i > 89 && i <= 119) {
-                            var radius = 14.5;
-                            var theta = (-i /30) * (2 * Math.PI)
+                            var radius = 17.5;
+                            var theta = (i /60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 4.5;
@@ -126,8 +126,8 @@
                         }
 
                         else if (i > 119 && i <= 149) {
-                            var radius = 16;
-                            var theta = (-i /30) * (2 * Math.PI)
+                            var radius = 19;
+                            var theta = (-i /60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 6;
@@ -137,7 +137,49 @@
                         }
 
                         else {
-                            return 0 + " " + 1281283971209328100 + " " + 0;
+                            return 0 + " " + 10 + " " + 0;
+                        }
+                    },
+
+                    rotation: function(d,i) {
+
+                        if (i >= 0 && i <= 29) {
+                            var x = 0;
+                            var y = -360 * -i/60;
+                            var z = 0;
+                            return x + " " + y + " " + z
+                        }
+
+                        else if (i > 29 && i <= 59) {
+                            var x = 0;
+                            var y = 360 * -i/60;
+                            var z = 0;
+                            return x + " " + y + " " + z
+                        }
+
+                        else if (i > 59 && i <= 89) {
+                            var x = 0;
+                            var y = -360 * -i/60;
+                            var z = 0;
+                            return x + " " + y + " " + z
+                        }
+
+                        else if (i > 89 && i <= 119) {
+                            var x = 0;
+                            var y = 360 * -i/60;
+                            var z = 0;
+                            return x + " " + y + " " + z
+                        }
+
+                        else if (i > 119 && i <= 149) {
+                            var x = 0;
+                            var y = -360 * -i/60;
+                            var z = 0;
+                            return x + " " + y + " " + z
+                        }
+
+                        else {
+                            return 0 + " " + 10 + " " + 0;
                         }
                     },
 
