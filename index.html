@@ -33,7 +33,7 @@
 
         <!-- Camera -->
 
-        <a-entity position="0 1.5 0">
+        <a-entity position="22.5 1.5 7">
             <a-entity camera="" look-controls="" wasd-controls="">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
@@ -43,14 +43,25 @@
 
         <!-- <a-box position="1.5 0 -5" scale="1" color="teal"></a-box> -->
 
-
         <a-sky color="#f1f1f1"></a-sky>
     </a-scene>
 
     <script>
         d3.csv("data.csv", function(error, data) {
 
-            // console.log(data);
+            // Empty Array that loads the data from the CSV
+
+            var dataAmount = [];
+
+            for(i=0; i<parseInt(data[0].aantalVrouwen); i++){
+                dataAmount.push(1);
+            }
+
+            for(i=0; i<parseInt(data[0].aantalMannen); i++){
+                dataAmount.push(0);
+            }
+
+            console.log(dataAmount);
 
             var hscale = d3.scaleLinear()
                 .domain([0, d3.max(data)])
@@ -58,8 +69,6 @@
 
             var scene = d3
                 .select("a-scene");
-
-            var radiusje = 30;
 
             var boxes = scene
                 .selectAll("a-box.bar")
@@ -71,81 +80,84 @@
                 // New attrs
                 .attrs({
                     position: function(d, i) {
-                        var radius = radiusje;
-                        var theta = (-i/150) * (2 * Math.PI)
-                        // console.log(i);
 
-                        if (i > 0 && i < 12) {
-                            radiusje = 30;
+                        if (i >= 0 && i <= 29) {
+                            var radius = 10;
+                            var theta = (-i /30) * (2 * Math.PI)
+
+                            var x =  i * 1.5;
                             var y = 0;
-                            var x = radius * Math.cos(theta);
-                            var z = radius * Math.sin(theta);
-                            // var theta = (-i/150) * (2 * Math.PI)
-                        } else if ( i> 12 && i < 30) {
-                            radiusje = 34;
-                            var y = 1;
-                            var x = radius * Math.cos(theta);
-                            var z = radius * Math.sin(theta);
-                        } else if ( i > 30 && i < 54) {
-                            radiusje = 38;
-                            var y = 2;
-                            var x = radius * Math.cos(theta);
-                            var z = radius * Math.sin(theta);
-                        } else if ( i > 54 && i < 84) {
-                            radiusje = 42;
-                            var y = 3;
-                            var x = radius * Math.cos(theta);
-                            var z = radius * Math.sin(theta);
-                        } else if ( i > 84 && i < 114) {
-                            radiusje = 46;
-                            var y = 4;
-                            var x = radius * Math.cos(theta);
-                            var z = radius * Math.sin(theta);
-                        } else if ( i > 114 && i <= 150) {
-                            radiusje = 50;
-                            var y = 5;
-                            var x = radius * Math.cos(theta);
-                            var z = radius * Math.sin(theta);
+                            var z = -5;
+
+                            // var x = radius * Math.cos(theta);
+                            // var y = 0;
+                            // var z = radius * Math.sin(theta);
+                            return x + " " + y + " " + z;
                         }
 
-                        // var x = radius * Math.cos(theta);
-                        // var y = 0;
-                        // var z = radius * Math.sin(theta);
-                        return x + " " + y + " " + z;
-                    },
+                        else if (i > 29 && i <= 59) {
+                            var radius = 12;
+                            var theta = (-i/30) * (2 * Math.PI)
 
-                    rotation: function(d,i) {
-                      var x = 0;
-                      var y = -360 * -i/150;
-                      var z = 0;
-                      return x + " " + y + " " + z
+                            var x =  i * 1.5 - 45;
+                            var y = 2;
+                            var z = -6;
+
+                            // var x = radius * Math.cos(theta);
+                            // var y = 2;
+                            // var z = radius * Math.sin(theta);
+
+                            return x + " " + y + " " + z;
+                        }
+
+                        else if (i > 59 && i <= 89) {
+                            var radius = 10;
+                            var theta = (i/150) * (2 * Math.PI)
+
+                            var x =  i * 1.5 - 90;
+                            var y = 4;
+                            var z = -7;
+                            return x + " " + y + " " + z;
+                        }
+
+                        else if (i > 89 && i <= 119) {
+                            var radius = 10;
+                            var theta = (i/150) * (2 * Math.PI)
+
+                            var x =  i * 1.5 - 135;
+                            var y = 6;
+                            var z = -8;
+                            return x + " " + y + " " + z;
+                        }
+
+                        else if (i > 119 && i <= 149) {
+                            var radius = 10;
+                            var theta = (i/150) * (2 * Math.PI)
+
+                            var x =  i * 1.5 - 180;
+                            var y = 8;
+                            var z = -9;
+                            return x + " " + y + " " + z;
+                        }
+
+                        else {
+                            return 0 + " " + 1281283971209328100 + " " + 0;
+                        }
                     },
 
                     height: function(d, i) {
-                        if(d==0) {
-                            // Man
-                            return 2;
-                        }
-                        else if(d==1) {
-                            // Woman
-                            return 2;
-                        }
+                        return 1;
                     },
 
                     color: function(d,i){
-
-                        if (i > 0 && i < 12) {
-                            return "green";
-                        } else if ( i> 12 && i < 30) {
-                            return "orange";
-                        } else if ( i > 30 && i < 54) {
-                            return "blue";
-                        } else if ( i > 54 && i < 84) {
+                        if (d==1) {
+                            // Vrouwen
                             return "red";
-                        } else if ( i > 84 && i < 114) {
-                            return "purple";
-                        } else if ( i > 114 && i <= 150) {
-                            return "black";
+                        }
+
+                        if (d==0) {
+                            // Vrouwen
+                            return "blue";
                         }
                     }
                 })
