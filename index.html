@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>A-frame and D3</title>
     <meta name="description" content="A-frame and D3">
@@ -13,85 +14,109 @@
 
     <!-- D3 multi selection -->
     <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <style>
-      body {
-        margin: 0;
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-      }
+        body {
+            margin: 0;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
     </style>
 
-  </head>
-  <body>
+</head>
+
+<body>
     <a-scene>
 
-      <!-- Camera -->
+        <!-- Camera -->
 
-      <a-entity position="0 1.5 0">
-        <a-entity camera="" look-controls="" wasd-controls="">
-          <a-cursor color="#FFF"></a-cursor>
+        <a-entity position="0 1.5 0">
+            <a-entity camera="" look-controls="" wasd-controls="">
+                <a-cursor color="#FFF"></a-cursor>
+            </a-entity>
         </a-entity>
-      </a-entity>
 
-      <!-- Box (not used) -->
+        <!-- Box (not used) -->
 
-      <a-box position="1.5 0 -5" scale="1" color="teal"></a-box>
+        <!-- <a-box position="1.5 0 -5" scale="1" color="teal"></a-box> -->
 
 
-      <a-sky color="#f1f1f1"></a-sky>
+        <a-sky color="#f1f1f1"></a-sky>
     </a-scene>
 
     <script>
+        d3.csv("data.csv", function(error, data) {
 
-      d3.csv("data.csv", function(error, data) {
+            console.log(data);
 
-        // fake data
-        // var data = [ 10, 20 ]
+            var hscale = d3.scaleLinear()
+                .domain([0, d3.max(data)])
+                .range([0, 5])
 
-        console.log(data);
+            var scene = d3
+                .select("a-scene");
+            // console.log(data[0].aantalMannen);
 
-        var hscale = d3.scaleLinear()
-            .domain([0, d3.max(data)])
-            .range([0,5])
+            var dataAmount = [];
+            for(i=0; i<parseInt(data[0].aantalMannen); i++){
+                dataAmount.push(0);
+            }
+            for(i=0; i<parseInt(data[0].aantalVrouwen); i++){
+                dataAmount.push(1);
+            }
 
-        var scene = d3
-            .select("a-scene");
+            var boxes = scene
+                .selectAll("a-box.bar")
+                .data(dataAmount)
+                .enter()
+                .append("a-box")
+                .classed("bar", true)
 
-        var boxes = scene
-            .selectAll("a-box.bar")
-            .data(data)
-            .enter()
-            .append("a-box")
-            .classed("bar", true)
+                // New attrs
+                .attrs({
 
-            // New attrs
-            .attrs({
+                    position: function(d, i) {
 
-              position: function(d,i) {
+                         console.log("i: " + i + " " + "d"  + d)
+                        //console.log(d.aantalMannen);
+                        /*for(var a in d){
+                            console.log(a + ", " +d[a]);
+                        }*/
+                        //console.log(d.aantalMannen)
 
-                console.log("i: " + i + " " + "d: " + d)
+                        // for(x=0; x<d.aantalMannen; x++){
+                        //     d3.select(this).append("div");
+                        // }
+                        var x = i * 1.30;
+                        var y = 0;
+                        var z = -5;
+                        return x + " " + y + " " + z;
 
-                var x = 0;
-                var y = i * 1.2;
-                var z = -5;
-                return x + " " + y + " " + z;
+                    },
 
-            },
+                    height: function(d, i) {
+                        return 1;
 
-              height: function(d,i) {
-                return 1;
+                    },
 
-            },
+                    color: function(d,i){
+                        //console.log(d)
+                        if(d==0){
+                            return "red";
+                            //#e8431f"
+                        } else {
+                            //vrouw
+                            return "blue";
+                        }
+                    }
+                })
 
-              color: "#e8431f"
-        })
-
-      });
-
+        });
     </script>
-  </body>
+    <div id="test"></div>
+</body>
+
 </html>
