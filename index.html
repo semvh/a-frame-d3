@@ -77,7 +77,15 @@
             blockZ = 0,
             blockAdd = 1.5,
             blockRows = 5,
-            blockCount;
+            blockCount,
+            rotationY = 0;
+
+        var zAdd = 0;
+
+        var totalSeats = 150,
+            middle = totalSeats / 2;;
+
+        var rowCount = 0;
 
         // Load datasheet
         d3.csv("data.csv", function(error, data) {
@@ -109,12 +117,29 @@
                     position: function(d, i) {
                         // blockCount = blockZ -= blockAdd;
                         blockCount = i%blockRows;
-                        console.log(blockCount);
+                        //
+                        // if (i < middle) {
+                        //     console.log("lower");
+                        // } else if (i >= middle && i <= totalSeats) {
+                        //     blockZ -= 20;
+                        // } else {
+                        //     console.log("error");
+                        // }
 
                         if (blockCount === 0) {
                             blockX += blockAdd;
-                            blockZ = 0;
+                            blockZ = 0.5 * zAdd;
                             blockY = 0;
+                            rowCount++;
+
+                            if (i < middle) {
+                                zAdd -= 2;
+                                // console.log(blockZ);
+                            } else {
+                                zAdd += 2;
+                            }
+
+                            // console.log(rowCount);
                         }
 
                         y = blockY += 0.5;
@@ -125,6 +150,15 @@
                     },
 
                     rotation: function(d,i) {
+                        // console.log(blockCount2);
+
+                        // if (blockCount2 == 0) {
+                        //     rotationY++;
+                        //     console.log(".....")
+                        // }
+                        var y = rotationY;
+                        var x = 0, z = 0;
+                        return x + " " + y + " " + z;
 
                     },
 
