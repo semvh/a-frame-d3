@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>A-frame and D3</title>
-    <meta name="description" content="A-frame and D3">
+    <title>Tweede Kamer</title>
+    <meta name="description" content="Een datavisualisatie voor de verkiezingen">
 
     <!-- A-frame -->
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
@@ -33,17 +33,21 @@
 
         <!-- Camera -->
 
-        <a-entity position="0 1.5 4">
+        <a-entity position="0 1.5 0">
             <a-entity camera="" look-controls="" wasd-controls="">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
         </a-entity>
 
         <!-- Box (not used) -->
+        <a-entity>
+            <a-box position="-1.24 0 -1.25" scale="3 1 1" rotation="0 -20 0" color="rgb(171, 114, 16)"></a-box>
+            <a-box position="1.24 0 -1.25" scale="3 1 1" rotation="0 20 0" color="rgb(171, 114, 16)"></a-box>
+        </a-entity>
 
-        <!-- <a-box position="1.5 0 -5" scale="1" color="teal"></a-box> -->
+        <a-plane position="0 -0.5 -7" height="25" width="40" rotation="-90 0 0" color="#cbffb9"></a-plane>
 
-        <a-sky color="#f1f1f1"></a-sky>
+        <a-sky color="#ffffff"></a-sky>
     </a-scene>
 
     <script>
@@ -61,7 +65,7 @@
                 dataAmount.push(0);
             }
 
-            console.log(dataAmount);
+            // console.log(dataAmount);
 
             var hscale = d3.scaleLinear()
                 .domain([0, d3.max(data)])
@@ -69,6 +73,9 @@
 
             var scene = d3
                 .select("a-scene");
+
+            var rowHeight = 0; // The var that stores the hight
+            var rowHeightAdd = 1.5; // How much higher the next row will be
 
             var boxes = scene
                 .selectAll("a-box.bar")
@@ -94,7 +101,7 @@
 
                         else if (i > 29 && i <= 59) {
                             var radius = 14.5;
-                            var theta = (i /60) * (2 * Math.PI)
+                            var theta = (i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 1.5;
@@ -105,7 +112,7 @@
 
                         else if (i > 59 && i <= 89) {
                             var radius = 16;
-                            var theta = (-i /60) * (2 * Math.PI)
+                            var theta = (-i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 3;
@@ -116,7 +123,7 @@
 
                         else if (i > 89 && i <= 119) {
                             var radius = 17.5;
-                            var theta = (i /60) * (2 * Math.PI)
+                            var theta = (i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 4.5;
@@ -127,7 +134,7 @@
 
                         else if (i > 119 && i <= 149) {
                             var radius = 19;
-                            var theta = (-i /60) * (2 * Math.PI)
+                            var theta = (-i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
                             var y = 6;
@@ -145,35 +152,35 @@
 
                         if (i >= 0 && i <= 29) {
                             var x = 0;
-                            var y = -360 * -i/60;
+                            var y = -360 * -i / 60;
                             var z = 0;
                             return x + " " + y + " " + z
                         }
 
                         else if (i > 29 && i <= 59) {
                             var x = 0;
-                            var y = 360 * -i/60;
+                            var y = 360 * -i / 60;
                             var z = 0;
                             return x + " " + y + " " + z
                         }
 
                         else if (i > 59 && i <= 89) {
                             var x = 0;
-                            var y = -360 * -i/60;
+                            var y = -360 * -i / 60;
                             var z = 0;
                             return x + " " + y + " " + z
                         }
 
                         else if (i > 89 && i <= 119) {
                             var x = 0;
-                            var y = 360 * -i/60;
+                            var y = 360 * -i / 60;
                             var z = 0;
                             return x + " " + y + " " + z
                         }
 
                         else if (i > 119 && i <= 149) {
                             var x = 0;
-                            var y = -360 * -i/60;
+                            var y = -360 * -i / 60;
                             var z = 0;
                             return x + " " + y + " " + z
                         }
