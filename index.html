@@ -51,6 +51,9 @@
     </a-scene>
 
     <script>
+        var rowHeight = 0;
+        var rowAddition = 2.5;
+
         d3.csv("data.csv", function(error, data) {
 
             // Empty Array that loads the data from the CSV
@@ -93,7 +96,7 @@
                             var theta = (-i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
-                            var y = 0;
+                            var y = rowHeight;
                             var z = radius * Math.sin(theta);
 
                             return x + " " + y + " " + z;
@@ -104,7 +107,7 @@
                             var theta = (i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
-                            var y = 1.5;
+                            var y = rowHeight + rowAddition;
                             var z = radius * Math.sin(theta);
 
                             return x + " " + y + " " + z;
@@ -115,7 +118,7 @@
                             var theta = (-i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
-                            var y = 3;
+                            var y = rowHeight + (rowAddition*2);
                             var z = radius * Math.sin(theta);
 
                             return x + " " + y + " " + z;
@@ -126,7 +129,8 @@
                             var theta = (i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
-                            var y = 4.5;
+                            var y = rowHeight + (rowAddition*3);
+                            console.log(rowHeight + " rij 4");
                             var z = radius * Math.sin(theta);
 
                             return x + " " + y + " " + z;
@@ -137,7 +141,8 @@
                             var theta = (-i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
-                            var y = 6;
+                            var y = rowHeight + (rowAddition*4);
+                            console.log(rowHeight + " rij 5");
                             var z = radius * Math.sin(theta);
 
                             return x + " " + y + " " + z;
