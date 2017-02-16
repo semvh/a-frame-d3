@@ -30,28 +30,45 @@
 
 <body>
     <a-scene>
+        <!-- Assets are here -->
+
+        <a-assets>
+            <img id="woodTexture" src="build/img/wood.jpg">
+            <img id="carpetTexture" src="build/img/carpet.jpg">
+        </a-assets>
 
         <!-- Camera -->
 
-        <a-entity position="0 1.5 0">
+        <a-entity position="0 1.5 -3.5">
             <a-entity camera="" look-controls="" wasd-controls="">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
         </a-entity>
 
+
+        <!-- <a-entity obj-model="obj: #chair-obj; mtl: #chair-mtl" scale="0.0001"></a-entity> -->
+
         <!-- Box (not used) -->
         <a-entity>
-            <a-box position="-1.24 0 -1.25" scale="3 1 1" rotation="0 -20 0" color="rgb(171, 114, 16)"></a-box>
-            <a-box position="1.24 0 -1.25" scale="3 1 1" rotation="0 20 0" color="rgb(171, 114, 16)"></a-box>
+            <a-box src="#woodTexture" position="-1.24 0 -4.25" scale="3 1 1" rotation="0 20 0" color="rgb(171, 114, 16)"></a-box>
+            <a-box src="#woodTexture" position="1.24 0 -4.25" scale="3 1 1" rotation="0 -20 0" color="rgb(171, 114, 16)"></a-box>
         </a-entity>
 
-        <a-plane position="0 -0.5 -7" height="25" width="40" rotation="-90 0 0" color="#cbffb9"></a-plane>
+        <!-- <a-plane src="#carpetTexture" position="0 -0.5 -7" height="25" width="40" rotation="-90 0 0" color="#cbffb9"></a-plane> -->
+        <a-entity geometry="primitive: plane; width: 40; height: 25;" material="src: #carpetTexture; repeat: 10 10; color: #a2f2c9;" position="0 -0.5 -7" rotation="-90 0 0"></a-entity>
+
+        <!-- Default lighting injected by A-Frame. -->
+        <a-entity light="type: ambient; color: #BBB"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="3.5 5 1"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="3 5 1"></a-entity>
+
 
         <a-sky color="#ffffff"></a-sky>
     </a-scene>
 
+
     <script>
-        var rowHeight = 0;
+        var rowHeight = 4;
         var rowAddition = 2.5;
 
         d3.csv("data.csv", function(error, data) {
@@ -78,7 +95,7 @@
                 .select("a-scene");
 
             var rowHeight = 0; // The var that stores the hight
-            var rowHeightAdd = 1.5; // How much higher the next row will be
+            var rowAddition = .5; // How much higher the next row will be
 
             var boxes = scene
                 .selectAll("a-box.bar")
@@ -118,7 +135,7 @@
                             var theta = (-i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
-                            var y = rowHeight + (rowAddition*2);
+                            var y = rowHeight + (rowAddition * 2);
                             var z = radius * Math.sin(theta);
 
                             return x + " " + y + " " + z;
@@ -129,7 +146,7 @@
                             var theta = (i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
-                            var y = rowHeight + (rowAddition*3);
+                            var y = rowHeight + (rowAddition * 3);
                             console.log(rowHeight + " rij 4");
                             var z = radius * Math.sin(theta);
 
@@ -141,7 +158,7 @@
                             var theta = (-i / 60) * (2 * Math.PI)
 
                             var x = radius * Math.cos(theta);
-                            var y = rowHeight + (rowAddition*4);
+                            var y = rowHeight + (rowAddition * 4);
                             console.log(rowHeight + " rij 5");
                             var z = radius * Math.sin(theta);
 
@@ -209,7 +226,9 @@
                             // Vrouwen
                             return "blue";
                         }
-                    }
+                    },
+
+                    src: "#carpetTexture"
                 })
         });
     </script>
