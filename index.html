@@ -40,7 +40,9 @@
         <!-- Camera -->
 
         <a-entity position="0 1.5 -3.5">
-            <a-entity camera="" look-controls="" wasd-controls="">
+
+        <!-- <a-entity position="0 25 -3.5" rotation="-90 0 0"> -->
+            <a-entity camera="" look-controls="" wasd-controls="fly: true; acceleration: 60; easing: 5;">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
         </a-entity>
@@ -55,7 +57,7 @@
         </a-entity>
 
         <!-- <a-plane src="#carpetTexture" position="0 -0.5 -7" height="25" width="40" rotation="-90 0 0" color="#cbffb9"></a-plane> -->
-        <a-entity geometry="primitive: plane; width: 40; height: 25;" material="src: #carpetTexture; repeat: 10 10; color: #a2f2c9;" position="0 -0.5 -7" rotation="-90 0 0"></a-entity>
+        <a-entity geometry="primitive: plane; width: 50; height: 35;" material="src: #carpetTexture; repeat: 10 10; color: #a2f2c9;" position="0 -0.5 -10" rotation="-90 0 0"></a-entity>
 
         <!-- Default lighting injected by A-Frame. -->
         <a-entity light="type: ambient; color: #BBB"></a-entity>
@@ -74,7 +76,17 @@
             rowAddition = 2.5,
             baseRadius = 13,
             addRadius = 1.5;
+            row1 = 60;
+            row2 = 60;
+            row3 = 60;
+            row4 = 60;
+            row5 = 60;
 
+            // row1 = 59;
+            // row2 = 59;
+            // row3 = 59.8;
+            // row4 = 59.55;
+            // row5 = 59.92;
 
         // Load datasheet
         d3.csv("data.csv", function(error, data) {
@@ -111,24 +123,29 @@
                     position: function(d, i) {
                         if (i >= 0 && i <= 29) {
                             var radius = baseRadius;
-                            var theta = (-i / 60) * (2 * Math.PI)
+                            var theta = (-i / row1) * (2 * Math.PI)
                             var y = rowHeight;
+
                         } else if (i > 29 && i <= 59) {
                             var radius = baseRadius + addRadius;
-                            var theta = (i / 60) * (2 * Math.PI)
+                            var theta = (i / row2) * (2 * Math.PI)
                             var y = rowHeight + rowAddition;
+
                         } else if (i > 59 && i <= 89) {
-                            var radius = baseRadius + (addRadius*2);
-                            var theta = (-i / 60) * (2 * Math.PI)
+                            var radius = baseRadius + (addRadius * 2);
+                            var theta = (-i / row3) * (2 * Math.PI)
                             var y = rowHeight + (rowAddition*2);
+
                         } else if (i > 89 && i <= 119) {
-                            var radius = baseRadius + (addRadius*3);
-                            var theta = (i / 60) * (2 * Math.PI)
+                            var radius = baseRadius + (addRadius * 3);
+                            var theta = (i / row4) * (2 * Math.PI)
                             var y = rowHeight + (rowAddition*3);
+
                         } else if (i > 119 && i <= 149) {
-                            var radius = baseRadius + (addRadius*4);
-                            var theta = (-i / 60) * (2 * Math.PI)
+                            var radius = baseRadius + (addRadius * 4);
+                            var theta = (-i / row5) * (2 * Math.PI)
                             var y = rowHeight + (rowAddition*4);
+
                         } else { var x = 0, y = 10, z = 0; }
 
                             var x = radius * Math.cos(theta);
@@ -140,15 +157,15 @@
                     rotation: function(d,i) {
 
                         if (i >= 0 && i <= 29) {
-                            var y = -360 * -i / 60;
+                            var y = -360 * -i / row1;
                         } else if (i > 29 && i <= 59) {
-                            var y = 360 * -i / 60;
+                            var y = 360 * -i / row2;
                         } else if (i > 59 && i <= 89) {
-                            var y = -360 * -i / 60;
+                            var y = -360 * -i / row3;
                         } else if (i > 89 && i <= 119) {
-                            var y = 360 * -i / 60;
+                            var y = 360 * -i / row4;
                         } else if (i > 119 && i <= 149) {
-                            var y = -360 * -i / 60;
+                            var y = -360 * -i / row5
                         } else {
                             y = 10;
                         }
