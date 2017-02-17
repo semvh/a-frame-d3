@@ -78,6 +78,7 @@
             blockAdd = 1.5,
             blockRows = 5,
             blockCount;
+        var rowRadius = 10;
 
         // Load datasheet
         d3.csv("data.csv", function(error, data) {
@@ -107,18 +108,32 @@
                 .classed("bar", true)
                 .attrs({ // New attrs
                     position: function(d, i) {
-                        // blockCount = blockZ -= blockAdd;
+                        var radius = rowRadius;
+                        var theta = (blockX / 60) * (2 * Math.PI);
+
+                        // XYZ eerst
+                        // var x = radius * Math.cos(theta);
+                        // var y = rowHeight;
+                        // var z = radius * Math.sin(theta);
+
+                        // return x + " " + y + " " + z;
+
                         blockCount = i%blockRows;
                         console.log(blockCount);
 
                         if (blockCount === 0) {
+                            rowRadius += 0.5;
                             blockX += blockAdd;
                             blockZ = 0;
                             blockY = 0;
                         }
 
-                        y = blockY += 0.5;
-                        x = blockX;
+                        // Originelen
+                        // x = blockX;
+                        // z = blockZ -= blockAdd;
+
+                        x = radius * Math.cos(theta);
+                        y = blockY += 1.5;
                         z = blockZ -= blockAdd;
 
                         return x + " " + y + " " + z;
