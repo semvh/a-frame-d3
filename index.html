@@ -100,7 +100,9 @@
             // Global vars
             var rowHeight = 0.4,
                 blockAdd = 1.5,
-                rowRadius = 10;
+                radiusBase = 10;
+                radiusAdd = 1.5;
+
 
             var boxes = scene
                 .selectAll("a-box.zetel")
@@ -110,37 +112,45 @@
                 .classed("zetel", true)
                 .attrs({ // New attrs
                     position: function(d, i) {
-                        var radius = rowRadius;
-                        var theta = (blockX / 66) * (2 * Math.PI);
+                        var radius = radiusBase;
+                        var theta = (blockX / 60) * (2 * Math.PI);
 
                         blockCount++;
 
+                        console.log(d.length);
+
                         // Reset counter after each row;
-                        if (blockCount > 4) { blockCount = 0; }
+                        if (blockCount > 5) { blockCount = 0; }
 
                         // Move one to the side
-                        if (blockCount === 0) { blockX += blockAdd; }
+                        if (blockCount === 0) {
+                            blockX += blockAdd;
+                        }
 
                         switch (blockCount) {
-                            case 0:
-                                rowRadius = 10;
-                                y = rowHeight*5;
-                                break;
                             case 1:
-                                rowRadius = 11.5;
+                                radius = radiusBase+radiusAdd;
                                 y = rowHeight;
                                 break;
                             case 2:
-                                rowRadius = 13;
+                                radius = radiusBase+(radiusAdd*2);
                                 y = rowHeight*2;
                                 break;
                             case 3:
-                                rowRadius = 14.5;
+                                radius = radiusBase+(radiusAdd*3);
                                 y = rowHeight*3;
                                 break;
                             case 4:
-                                rowRadius = 16;
+                                radius = radiusBase+(radiusAdd*4);
                                 y = rowHeight*4;
+                                break;
+                            case 5:
+                                radius = radiusBase+(radiusAdd*5);
+                                y = rowHeight*5;
+                                break;
+                            case 0:
+                                radius = radiusBase+(radiusAdd*6);
+                                y = rowHeight*6;
                                 break;
                         }
 
