@@ -7,13 +7,22 @@
     <meta name="description" content="Een datavisualisatie voor de verkiezingen">
 
     <!-- A-frame -->
-    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <!-- <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script> -->
 
-    <!-- Fixed D3 -->
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- D3 -->
+    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
 
     <!-- D3 multi selection -->
-    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    <!-- <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script> -->
+
+    <!-- Local A-frame -->
+    <script src="build/js/aframe.min.js"></script>
+
+    <!-- Local D3 -->
+    <script src="build/js/d3.min.js"></script>
+
+    <!-- Local D3 multi selection -->
+    <script src="build/js/d3-selection-multi.v1.min.js"></script>
 
     <style>
         body {
@@ -39,7 +48,7 @@
 
         <!-- Camera -->
 
-        <a-entity position="0 7 6">
+        <a-entity position="0 7 17">
 
         <!-- <a-entity position="0 25 -3.5" rotation="-90 0 0"> -->
             <a-entity camera="" look-controls="" wasd-controls="fly: true; acceleration: 60; easing: 5;">
@@ -106,26 +115,19 @@
                 blockZ = 0,
                 blockAdd = 1.5,
                 blockRows = 5,
-                blockCount,
+                blockCount = 0,
                 rowRadius = 10;
 
             var boxes = scene
-                .selectAll("a-box.bar")
+                .selectAll("a-box.zetel")
                 .data(dataAmount)
                 .enter()
                 .append("a-box")
-                .classed("bar", true)
+                .classed("zetel", true)
                 .attrs({ // New attrs
                     position: function(d, i) {
                         var radius = rowRadius;
                         var theta = (-blockX / 60) * (2 * Math.PI);
-
-                        // XYZ eerdere versie (met radius)
-                        // var x = radius * Math.cos(theta);
-                        // var y = rowHeight;
-                        // var z = radius * Math.sin(theta);
-
-                        // return x + " " + y + " " + z;
 
                         blockCount = i%blockRows;
 
@@ -136,13 +138,7 @@
                             blockY = 0;
                         }
 
-                        // if (blockCount === 0) {
-                        //     rowRadius += 1.5;
-                        // }
-                        console.log(blockCount)
                         switch (blockCount) {
-
-
 
                             case 4:
                                 rowRadius = 10;
@@ -160,10 +156,6 @@
                                 rowRadius = 16;
                                 break;
                         }
-
-                        // Originelen
-                        // x = blockX;
-                        // z = blockZ -= blockAdd;
 
                         x = radius * Math.cos(theta);
                         y = blockY += 0.5;
