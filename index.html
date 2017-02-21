@@ -63,14 +63,20 @@
             <a-box position="-1.24 0.5 0" scale="3 1 1" rotation="0 -20 0" color="rgb(171, 114, 16)"></a-box>
         </a-entity>
 
-        <a-plane position="0 0 5" height="25" width="40" rotation="-90 0 0" color="#bfd2d0"></a-plane>
+        <a-plane position="0 0 5" height="30" width="40" rotation="-90 0 0" color="#bfd2d0"></a-plane>
+
+        <a-plane position="0 5 20" height="10" width="40" rotation="0 -180 0" color="#8e8e8e"></a-plane>
+        <a-plane position="0 5 -10" height="10" width="40" rotation="0 0 0" color="#8e8e8e"></a-plane>
+
+        <a-plane position="20 5 5" height="10" width="30" rotation="0 -90 0" color="#8e8e8e"></a-plane>
+        <a-plane position="-20 5 5" height="10" width="30" rotation="0 90 0" color="#8e8e8e"></a-plane>
 
         <!-- Default lighting injected by A-Frame. -->
         <a-entity light="type: ambient; color: #BBB"></a-entity>
-        <a-entity light="type: directional; color: #FFF; intensity: 0.2" position="3.5 5 1"></a-entity>
-        <a-entity light="type: directional; color: #FFF; intensity: 0.2" position="3 5 1"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="-3 5 0"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="3 5 0"></a-entity>
 
-        <a-sky color="#ffffff"></a-sky>
+        <a-sky color="#afafaf"></a-sky>
     </a-scene>
 
 
@@ -80,6 +86,7 @@
             // Empty Array that loads the data from the CSV
             var dataAmount = [];
 
+            //
             for(i=0; i<parseInt(data[0].age1825); i++){ dataAmount.push(0); }
             for(i=0; i<parseInt(data[0].age2545); i++){ dataAmount.push(1); }
             for(i=0; i<parseInt(data[0].age4565); i++){ dataAmount.push(2); }
@@ -111,9 +118,9 @@
                         var radius = radiusBase;
                         var theta = (blockX / 72) * (2 * Math.PI);
 
+
                         blockCount++;
 
-                        console.log(d.length);
 
                         // Reset counter after each row;
                         if (blockCount > 5) { blockCount = 0; }
