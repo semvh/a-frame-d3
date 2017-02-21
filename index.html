@@ -45,17 +45,21 @@
             <img id="woodTexture" src="build/img/wood.jpg">
             <img id="carpetTexture" src="build/img/carpet.jpg">
             <img id="kamer" src="build/img/kamer.jpg">
+
+            <a-asset-item id="business-man" src="build/3d-assets/business-man.obj"></a-asset-item>
+            <a-asset-item id="business-woman" src="build/3d-assets/business-woman.obj"></a-asset-item>
         </a-assets>
 
         <!-- Camera -->
-
         <a-entity position="0 1.8 -2" rotation="0 -180 0">
-
         <!-- <a-entity position="0 25 -3.5" rotation="-90 0 0"> -->
             <a-entity camera="" look-controls="" wasd-controls="fly: false; acceleration: 60; easing: 5;">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
         </a-entity>
+
+        <a-entity class="business-man" material="color: #34d493" obj-model="obj: #business-man" position="0 0 5" rotation="0 180 0" scale="0.025 0.025 0.025"></a-entity>
+        <a-entity class="business-woman" material="color: #e370ca" obj-model="obj: #business-woman" position="-1 0 5" rotation="0 0 0" scale="1 1 1"></a-entity>
 
         <!-- Box (not used) -->
         <a-entity>
@@ -108,11 +112,11 @@
 
 
             var boxes = scene
-                .selectAll("a-box.zetel")
+                .selectAll("a-entity.business-man")
                 .data(dataAmount)
                 .enter()
-                .append("a-box")
-                .classed("zetel", true)
+                .append("a-entity")
+                .classed("business-man", true)
                 .attrs({ // New attrs
                     position: function(d, i) {
                         var radius = radiusBase;
@@ -174,6 +178,8 @@
                     height: function(d, i) {
                         return 1;
                     },
+
+                    src: "build/3d-assets/business-man.obj",
 
                     color: function(d,i){
                         if (d==0) {
