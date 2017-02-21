@@ -48,7 +48,7 @@
 
         <!-- Camera -->
 
-        <a-entity position="0 7 17">
+        <a-entity position="0 1.75 0" rotation="0 -180 0">
 
         <!-- <a-entity position="0 25 -3.5" rotation="-90 0 0"> -->
             <a-entity camera="" look-controls="" wasd-controls="fly: true; acceleration: 60; easing: 5;">
@@ -111,7 +111,7 @@
                 .attrs({ // New attrs
                     position: function(d, i) {
                         var radius = rowRadius;
-                        var theta = (-blockX / 60) * (2 * Math.PI);
+                        var theta = (blockX / 66) * (2 * Math.PI);
 
                         blockCount++;
 
@@ -152,7 +152,7 @@
 
                     rotation: function(d,i) {
                         // var x = 0;
-                        // var y = -360 * -i/150;
+                        // var y = -360 * blockX/66;
                         // var z = 0;
                         // return x + " " + y + " " + z
                     },
