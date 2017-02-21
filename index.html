@@ -24,6 +24,8 @@
     <!-- Local D3 multi selection -->
     <script src="build/js/d3-selection-multi.v1.min.js"></script>
 
+    <!-- <script src="https://rawgit.com/oscarmarinmiro/aframe-video-controls/master/dist/aframe-video-controls.min.js"></script> -->
+
     <style>
         body {
             margin: 0;
@@ -35,6 +37,20 @@
         }
     </style>
 
+    <script type="text/javascript">
+        // Component to change to random color on click.
+        AFRAME.registerComponent('cursor-listener', {
+          init: function () {
+            var COLORS = ['red', 'green', 'blue'];
+            this.el.addEventListener('click', function (evt) {
+              var randomIndex = Math.floor(Math.random() * COLORS.length);
+              this.setAttribute('material', 'color', COLORS[randomIndex]);
+              console.log('I was clicked at: ', evt.detail.intersection.point);
+            });
+          }
+        });
+
+    </script>
 </head>
 
 <body>
@@ -45,17 +61,29 @@
             <img id="woodTexture" src="build/img/wood.jpg">
             <img id="carpetTexture" src="build/img/carpet.jpg">
             <img id="kamer" src="build/img/kamer.jpg">
+            <video autoplay="false" muted id="heya" src="build/video/heya.mp4">
         </a-assets>
 
         <!-- Camera -->
 
-        <a-entity position="0 1.8 -2" rotation="0 -180 0">
+        <a-entity position="0 1.8 -1" rotation="0 -180 0">
 
-        <!-- <a-entity position="0 25 -3.5" rotation="-90 0 0"> -->
             <a-entity camera="" look-controls="" wasd-controls="fly: false; acceleration: 60; easing: 5;">
-                <a-cursor color="#FFF"></a-cursor>
+                <a-entity cursor="fuse: true; fuseTimeout: 1000"
+                          position="0 0 -0.1"
+                          geometry="primitive: ring"
+                          material="color: black; shader: flat">
+                <!-- <a-animation begin="click" easing="ease-in" attribute="scale" fill="backwards" from="0.05 0.05 0.05" to="0.06 0.06 0.06"></a-animation> -->
+                <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" fill="forwards" from="0.003 0.003 0.003" to="0.004 0.004 0.004"></a-animation>
+                </a-entity>
             </a-entity>
         </a-entity>
+
+        <!-- Cursor-listener -->
+        <a-entity position="0 0.5 -2" id="box" cursor-listener geometry="primitive: box" material="color: blue"></a-entity>
+
+
+
 
         <!-- Box (desk) -->
         <a-entity>
@@ -66,8 +94,20 @@
         <!-- Laptop -->
         <a-entity>
             <a-box position="0 1.025 0.4" scale="0.7 0.05 0.5" rotation="0 0 0" color="gray"></a-box>
-            <a-box position="0 1.25 0.65" scale="0.7 0.05 0.5" rotation="83.08 179.91 179.91" color="gray"></a-box>
-            <a-box position="0 1.28 0.64" scale="0.65 0.045 0.40" rotation="83.08 179.91 179.91" color="black"></a-box>
+
+            <!-- Screen -->
+            <!-- <a-box position="0 1.28 0.64" scale="0.65 0.045 0.40" rotation="83.08 179.91 179.91" color="black"></a-box> -->
+
+            <a-entity position="0 1.25 0.65" rotation="9 0 0">
+
+                <a-box  scale="0.7 0.05 0.5" color="gray" rotation="90 0 0"></a-box>
+                <a-video src="#heya" width="0.65" height="0.4" position="0 0.025 -0.026"></a-video>
+
+                <!-- <a-entity rotation="0 180 0" position="-0.05 -.75 -0.83" scale="0.4 0.4 0.4">
+                    <a-entity video-controls="src:#heya"></a-entity>
+                </a-entity> -->
+
+            </a-entity>
 
             <a-box position="0.300 1.05 0.50" scale="0.05 0.01 0.05" rotation="0 0 0" color="#f1f1f1"></a-box>
             <a-box position="0.240 1.05 0.50" scale="0.05 0.01 0.05" rotation="0 0 0" color="#f1f1f1"></a-box>
@@ -128,7 +168,7 @@
             <a-box position="-0.240 1.05 0.26" scale="0.05 0.01 0.05" rotation="0 0 0" color="#f1f1f1"></a-box>
             <a-box position="-0.300 1.05 0.26" scale="0.05 0.01 0.05" rotation="0 0 0" color="#f1f1f1"></a-box>
 
-            <a-animation begin="mouseenter"  attribute="position" to="0 0 -0.2" direction="alternate" dur="500" repeat="0"></a-animation>
+            <!-- <a-animation begin="mouseenter"  attribute="position" to="0 0 -0.2" direction="alternate" dur="500" repeat="0"></a-animation> -->
         </a-entity>
 
         <a-entity class="room">
