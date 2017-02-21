@@ -79,43 +79,27 @@
 
 
     <script>
-
         // Load datasheet
         d3.csv("data.csv", function(error, data) {
             // Empty Array that loads the data from the CSV
             var dataAmount = [];
 
-            for(i=0; i<parseInt(data[0].age1825); i++){
-                dataAmount.push(0);
-            }
+            for(i=0; i<parseInt(data[0].age1825); i++){ dataAmount.push(0); }
+            for(i=0; i<parseInt(data[0].age2545); i++){ dataAmount.push(1); }
+            for(i=0; i<parseInt(data[0].age4565); i++){ dataAmount.push(2); }
+            for(i=0; i<parseInt(data[0].age65plus); i++){ dataAmount.push(3); }
 
-            for(i=0; i<parseInt(data[0].age2545); i++){
-                dataAmount.push(1);
-            }
-
-            for(i=0; i<parseInt(data[0].age4565); i++){
-                dataAmount.push(2);
-            }
-
-            for(i=0; i<parseInt(data[0].age65plus); i++){
-                dataAmount.push(3);
-            }
-
-
-            var hscale = d3.scaleLinear()
-                .domain([0, d3.max(data)])
-                .range([0, 5])
 
             var scene = d3
                 .select("a-scene");
 
-        // Global vars
+            // Global statics
             var blockX = 0,
-                blockY = 0,
-                blockZ = 0,
+                blockCount = 0;
+
+            // Global vars
+            var rowHeight = 0.4,
                 blockAdd = 1.5,
-                blockRows = 5,
-                blockCount = 0,
                 rowRadius = 10;
 
             var boxes = scene
@@ -129,36 +113,38 @@
                         var radius = rowRadius;
                         var theta = (-blockX / 60) * (2 * Math.PI);
 
-                        blockCount = i%blockRows;
+                        blockCount++;
 
-                        if (blockCount === 0) {
-                            // rowRadius += 0;
-                            blockX += blockAdd;
-                            blockZ = 0;
-                            blockY = 0;
-                        }
+                        // Reset counter after each row;
+                        if (blockCount > 4) { blockCount = 0; }
+
+                        // Move one to the side
+                        if (blockCount === 0) { blockX += blockAdd; }
 
                         switch (blockCount) {
-
-                            case 4:
-                                rowRadius = 10;
-                                break;
                             case 0:
-                                rowRadius = 11.5;
+                                rowRadius = 10;
+                                y = rowHeight*5;
                                 break;
                             case 1:
-                                rowRadius = 13;
+                                rowRadius = 11.5;
+                                y = rowHeight;
                                 break;
                             case 2:
-                                rowRadius = 14.5;
+                                rowRadius = 13;
+                                y = rowHeight*2;
                                 break;
                             case 3:
+                                rowRadius = 14.5;
+                                y = rowHeight*3;
+                                break;
+                            case 4:
                                 rowRadius = 16;
+                                y = rowHeight*4;
                                 break;
                         }
 
                         x = radius * Math.cos(theta);
-                        y = blockY += 0.5;
                         z = radius * Math.sin(theta);
 
                         return x + " " + y + " " + z;
