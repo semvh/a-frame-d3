@@ -1,28 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Tweede Kamer</title>
     <meta name="description" content="Een datavisualisatie voor de verkiezingen">
 
-    <!-- A-frame -->
-    <!-- <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script> -->
-
-    <!-- D3 -->
-    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-
-    <!-- D3 multi selection -->
-    <!-- <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script> -->
-
-    <!-- Local A-frame -->
-    <script src="build/js/aframe.min.js"></script>
-
-    <!-- Local D3 -->
-    <script src="build/js/d3.min.js"></script>
-
-    <!-- Local D3 multi selection -->
-    <script src="build/js/d3-selection-multi.v1.min.js"></script>
+    <script src="build/js/aframe.min.js"></script> <!-- Local A-frame -->
+    <script src="build/js/d3.min.js"></script> <!-- Local D3 -->
+    <script src="build/js/d3-selection-multi.v1.min.js"></script> <!-- Local D3 multi selection -->
 
     <style>
         body {
@@ -34,53 +19,45 @@
             left: 0;
         }
     </style>
-
 </head>
 
 <body>
     <a-scene>
-        <!-- Assets are here -->
-
+        <!-- Assets loader -->
         <a-assets>
-            <img id="woodTexture" src="build/img/wood.jpg">
-            <img id="carpetTexture" src="build/img/carpet.jpg">
-            <img id="kamer" src="build/img/kamer.jpg">
-
-            <a-asset-item id="business-man" src="build/3d-assets/business-man.obj"></a-asset-item>
-            <a-asset-item id="business-woman" src="build/3d-assets/business-woman.obj"></a-asset-item>
+            <a-asset-item id="person" src="build/3d-assets/business-man.obj"></a-asset-item>
         </a-assets>
 
         <!-- Camera -->
         <a-entity position="0 1.8 -2" rotation="0 -180 0">
-        <!-- <a-entity position="0 25 -3.5" rotation="-90 0 0"> -->
             <a-entity camera="" look-controls="" wasd-controls="fly: false; acceleration: 60; easing: 5;">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
         </a-entity>
 
-        <a-entity class="business-man" material="color: #34d493" obj-model="obj: #business-man" position="0 0 5" rotation="0 180 0" scale="0.025 0.025 0.025"></a-entity>
-        <a-entity class="business-woman" material="color: #e370ca" obj-model="obj: #business-woman" position="-1 0 5" rotation="0 0 0" scale="1 1 1"></a-entity>
+        <a-entity class="person" material="color: #34d493" obj-model="obj: #person" position="0 0 5" rotation="0 180 0" scale="0.025 0.025 0.025"></a-entity>
 
-        <!-- Box (not used) -->
+        <!-- Table -->
         <a-entity>
             <a-box position="1.24 0.5 0" scale="3 1 1" rotation="0 20 0" color="rgb(171, 114, 16)"></a-box>
             <a-box position="-1.24 0.5 0" scale="3 1 1" rotation="0 -20 0" color="rgb(171, 114, 16)"></a-box>
         </a-entity>
 
-        <a-plane position="0 0 5" height="30" width="40" rotation="-90 0 0" color="#bfd2d0"></a-plane>
-
-        <a-plane position="0 5 20" height="10" width="40" rotation="0 -180 0" color="#8e8e8e"></a-plane>
-        <a-plane position="0 5 -10" height="10" width="40" rotation="0 0 0" color="#8e8e8e"></a-plane>
-
-        <a-plane position="20 5 5" height="10" width="30" rotation="0 -90 0" color="#8e8e8e"></a-plane>
-        <a-plane position="-20 5 5" height="10" width="30" rotation="0 90 0" color="#8e8e8e"></a-plane>
+        <!-- Room -->
+        <a-entity>
+            <!-- Floor -->
+            <a-plane position="0 0 5" height="30" width="40" rotation="-90 0 0" color="#bfd2d0"></a-plane>
+            <!-- Walls -->
+            <a-plane position="0 5 20" height="10" width="40" rotation="0 -180 0" color="#8e8e8e"></a-plane>
+            <a-plane position="0 5 -10" height="10" width="40" rotation="0 0 0" color="#8e8e8e"></a-plane>
+            <a-plane position="20 5 5" height="10" width="30" rotation="0 -90 0" color="#8e8e8e"></a-plane>
+            <a-plane position="-20 5 5" height="10" width="30" rotation="0 90 0" color="#8e8e8e"></a-plane>
+        </a-entity>
 
         <!-- Default lighting injected by A-Frame. -->
         <a-entity light="type: ambient; color: #BBB"></a-entity>
         <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="-3 5 0"></a-entity>
         <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="3 5 0"></a-entity>
-
-        <a-sky color="#afafaf"></a-sky>
     </a-scene>
 
 
@@ -89,16 +66,12 @@
         d3.csv("data.csv", function(error, data) {
             // Empty Array that loads the data from the CSV
             var dataAmount = [];
-
-            //
             for(i=0; i<parseInt(data[0].age1825); i++){ dataAmount.push(0); }
             for(i=0; i<parseInt(data[0].age2545); i++){ dataAmount.push(1); }
             for(i=0; i<parseInt(data[0].age4565); i++){ dataAmount.push(2); }
             for(i=0; i<parseInt(data[0].age65plus); i++){ dataAmount.push(3); }
 
-
-            var scene = d3
-                .select("a-scene");
+            var scene = d3.select("a-scene");
 
             // Global statics
             var blockX = 0,
@@ -112,11 +85,11 @@
 
 
             var boxes = scene
-                .selectAll("a-entity.business-man")
+                .selectAll("a-object-model.person")
                 .data(dataAmount)
                 .enter()
-                .append("a-entity")
-                .classed("business-man", true)
+                .append("a-object-model")
+                .classed("person", true)
                 .attrs({ // New attrs
                     position: function(d, i) {
                         var radius = radiusBase;
@@ -175,26 +148,11 @@
                         return x + " " + y + " " + z
                     },
 
-                    height: function(d, i) {
-                        return 1;
+                    src: function(d, i) {
+                        return "#person";
                     },
-
-                    src: "build/3d-assets/business-man.obj",
-
-                    color: function(d,i){
-                        if (d==0) {
-                            return "red";
-                        } else if (d==1) {
-                            return "blue";
-                        } else if (d==2) {
-                            return "green";
-                        } else if (d==3) {
-                            return "orange";
-                        }
-                    }
                 })
         });
     </script>
 </body>
-
 </html>
