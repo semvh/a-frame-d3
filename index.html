@@ -38,17 +38,32 @@
     </style>
 
     <script type="text/javascript">
-        // Component to change to random color on click.
-        AFRAME.registerComponent('cursor-listener', {
-          init: function () {
-            var COLORS = ['red', 'green', 'blue'];
+
+    // Component to change to random color on click.
+    AFRAME.registerComponent('cursor-listener', {
+        init: function () {
+
+            var elem = document.getElementById("changecamera");
+            var state = "ground";
+
             this.el.addEventListener('click', function (evt) {
-              var randomIndex = Math.floor(Math.random() * COLORS.length);
-              this.setAttribute('material', 'color', COLORS[randomIndex]);
-              console.log('I was clicked at: ', evt.detail.intersection.point);
+
+                if (state == "air") {
+                    elem.setAttribute('position', "0 1.8 -1");
+                    elem.setAttribute('rotation', "0 -180 0");
+                    state = "ground";
+                    console.log(changecamera);
+                } else {
+                    elem.setAttribute('position', "0 19 -1");
+                    elem.setAttribute('rotation', "-50 -180 0");
+                    state = "air";
+                    console.log(changecamera);
+                }
+
+                console.log('I was clicked at: ', evt.detail.intersection.point);
             });
-          }
-        });
+        }
+    });
 
     </script>
 </head>
@@ -60,30 +75,28 @@
         <a-assets>
             <img id="woodTexture" src="build/img/wood.jpg">
             <img id="carpetTexture" src="build/img/carpet.jpg">
-            <img id="kamer" src="build/img/kamer.jpg">
-            <video autoplay="false" muted id="heya" src="build/video/heya.mp4">
+            <img id="wallTexture" src="build/img/wall.png">
+            <a-mixin id="wall" material="color: #ffffff; src: #wallTexture; repeat: 3 3;"></a-mixin>
+            <a-mixin id="ceiling" material="color: #000458; src: #wallTexture; repeat: 8 8;"></a-mixin>
+            <a-mixin id="floor" material="color: #dfdfdf; src: #carpetTexture; repeat: 30 30;"></a-mixin>
+            <!-- <img id="kamer" src="build/img/kamer.jpg"> -->
+            <video id="verkiezingen" src="build/video/verkiezingen.mp4">
         </a-assets>
 
         <!-- Camera -->
 
-        <a-entity position="0 1.8 -1" rotation="0 -180 0">
-
-            <a-entity camera="" look-controls="" wasd-controls="fly: false; acceleration: 60; easing: 5;">
-                <a-entity cursor="fuse: true; fuseTimeout: 1000"
-                          position="0 0 -0.1"
-                          geometry="primitive: ring"
-                          material="color: black; shader: flat">
-                <!-- <a-animation begin="click" easing="ease-in" attribute="scale" fill="backwards" from="0.05 0.05 0.05" to="0.06 0.06 0.06"></a-animation> -->
-                <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" fill="forwards" from="0.003 0.003 0.003" to="0.004 0.004 0.004"></a-animation>
+        <a-entity id="changecamera" position="0 1.8 -1" rotation="0 -180 0">
+            <a-entity camera="" look-controls="" wasd-controls="fly: false; acceleration: 50; easing: 10;">
+                <a-entity position="0 0 -0.1" geometry="primitive: ring; radiusOuter: 0.030;
+                                  radiusInner: 0.020;" material="color: black; shader: flat; opacity: 0.5;" cursor="maxDistance: 30; fuse: true">
+                    <a-animation begin="click" easing="ease-in" attribute="scale" fill="backwards" from="0.1 0.1 0.1" to="0.05 0.05 0.05" dur="150"></a-animation>
+                    <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="forwards" from="0.05 0.05 0.05" to="0.1 0.1 0.1" dur="1500"></a-animation>
                 </a-entity>
             </a-entity>
         </a-entity>
 
-        <!-- Cursor-listener -->
-        <a-entity position="0 0.5 -2" id="box" cursor-listener geometry="primitive: box" material="color: blue"></a-entity>
-
-
-
+        <!-- Changebox -->
+        <a-entity scale="0.1 0.1 0.1" position=".5 1.075 0.4" id="changebox"  geometry="primitive: box" material="color: blue"></a-entity>
 
         <!-- Box (desk) -->
         <a-entity>
@@ -92,7 +105,7 @@
         </a-entity>
 
         <!-- Laptop -->
-        <a-entity>
+        <a-entity cursor-listener>
             <a-box position="0 1.025 0.4" scale="0.7 0.05 0.5" rotation="0 0 0" color="gray"></a-box>
 
             <!-- Screen -->
@@ -101,7 +114,7 @@
             <a-entity position="0 1.25 0.65" rotation="9 0 0">
 
                 <a-box  scale="0.7 0.05 0.5" color="gray" rotation="90 0 0"></a-box>
-                <a-video src="#heya" width="0.65" height="0.4" position="0 0.025 -0.026"></a-video>
+                <a-video src="#verkiezingen" width="0.65" height="0.4" position="0 0.025 -0.026" rotation="0 180 0"></a-video>
 
                 <!-- <a-entity rotation="0 180 0" position="-0.05 -.75 -0.83" scale="0.4 0.4 0.4">
                     <a-entity video-controls="src:#heya"></a-entity>
@@ -172,16 +185,20 @@
         </a-entity>
 
         <a-entity class="room">
-            <a-plane position="0 0 5" height="30" width="40" rotation="-90 0 0" color="#bfd2d0"></a-plane>
+            <!-- Floor -->
+            <a-plane mixin="floor" position="0 0 5" height="30" width="40" rotation="-90 0 0"></a-plane>
 
-            <a-plane position="0 5 20" height="10" width="40" rotation="0 -180 0" color="#8e8e8e"></a-plane>
-            <a-plane position="0 5 -10" height="10" width="40" rotation="0 0 0" color="#8e8e8e"></a-plane>
+            <!-- Ceiling -->
+            <a-plane mixin="ceiling" position="0 10 5" height="30" width="40" rotation="90 0 0"></a-plane>
 
-            <a-plane position="20 5 5" height="10" width="30" rotation="0 -90 0" color="#8e8e8e"></a-plane>
-            <a-plane position="-20 5 5" height="10" width="30" rotation="0 90 0" color="#8e8e8e"></a-plane>
+            <a-plane mixin="wall" position="0 5 20" height="10" width="40" rotation="0 -180 0"></a-plane>
+            <a-plane mixin="wall" position="0 5 -10" height="10" width="40" rotation="0 0 0"></a-plane>
+
+            <a-plane mixin="wall" position="20 5 5" height="10" width="30" rotation="0 -90 0"></a-plane>
+            <a-plane mixin="wall" position="-20 5 5" height="10" width="30" rotation="0 90 0"></a-plane>
 
             <!-- Default lighting injected by A-Frame. -->
-            <a-entity light="type: ambient; color: #BBB"></a-entity>
+            <a-entity light="type: ambient; color: #BBB" position="0 5 -5"></a-entity>
             <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="-3 5 0"></a-entity>
             <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="3 5 0"></a-entity>
         </a-entity>
@@ -196,7 +213,7 @@
             // Empty Array that loads the data from the CSV
             var dataAmount = [];
 
-            //
+            // For loop loading the data
             for(i=0; i<parseInt(data[0].age1825); i++){ dataAmount.push(0); }
             for(i=0; i<parseInt(data[0].age2545); i++){ dataAmount.push(1); }
             for(i=0; i<parseInt(data[0].age4565); i++){ dataAmount.push(2); }
@@ -211,7 +228,7 @@
                 blockCount = 0;
 
             // Global vars
-            var rowHeight = 0.4,
+            var rowHeight = 0.1,
                 blockAdd = 1.5,
                 radiusBase = 10;
                 radiusAdd = 1.5;
@@ -228,9 +245,7 @@
                         var radius = radiusBase;
                         var theta = (blockX / 72) * (2 * Math.PI);
 
-
                         blockCount++;
-
 
                         // Reset counter after each row;
                         if (blockCount > 5) { blockCount = 0; }
@@ -282,7 +297,44 @@
                     },
 
                     height: function(d, i) {
-                        return 1;
+
+                        console.log(blockCount)
+
+                        blockCount++;
+
+                        // Reset counter after each row;
+                        if (blockCount > 5) { blockCount = 0; }
+
+                        // Move one to the side
+                        if (blockCount === 0) {
+                            blockX += blockAdd;
+                        }
+
+                        var newHeight,
+                            height = 0.4;
+
+                        switch (blockCount) {
+                            case 1:
+                                newHeight = height;
+                                break;
+                            case 2:
+                                newHeight = height * 2;
+                                break;
+                            case 3:
+                                newHeight = height * 3;
+                                break;
+                            case 4:
+                                newHeight = height * 4;
+                                break;
+                            case 5:
+                                newHeight = height * 5;
+                                break;
+                            case 0:
+                                newHeight = height * 6;
+                                break;
+                        }
+
+                        return newHeight;
                     },
 
                     color: function(d,i){
@@ -294,6 +346,8 @@
                             return "green";
                         } else if (d==3) {
                             return "orange";
+                        } else {
+                            return "grey";
                         }
                     }
                 })
