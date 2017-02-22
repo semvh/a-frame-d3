@@ -10,14 +10,7 @@
     <script src="build/js/d3-selection-multi.v1.min.js"></script> <!-- Local D3 multi selection -->
 
     <style>
-        body {
-            margin: 0;
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
+        body { margin: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; }
     </style>
 </head>
 
@@ -25,39 +18,25 @@
     <a-scene>
         <!-- Assets loader -->
         <a-assets>
-            <a-asset-item id="person" src="build/3d-assets/business-man.obj"></a-asset-item>
+            <a-asset-item id="person" src="build/3d-assets/business-woman.obj"></a-asset-item>
         </a-assets>
 
         <!-- Camera -->
-        <a-entity position="0 1.8 -2" rotation="0 -180 0">
+        <a-entity position="0 1.8 -3" rotation="0 -180 0">
             <a-entity camera="" look-controls="" wasd-controls="fly: false; acceleration: 60; easing: 5;">
                 <a-cursor color="#FFF"></a-cursor>
             </a-entity>
         </a-entity>
 
-        <a-entity class="person" material="color: #34d493" obj-model="obj: #person" position="0 0 5" rotation="0 180 0" scale="0.025 0.025 0.025"></a-entity>
+        <a-entity class="person" material="color: #34d493" obj-model="obj: #person"></a-entity>
 
-        <!-- Table -->
-        <a-entity>
-            <a-box position="1.24 0.5 0" scale="3 1 1" rotation="0 20 0" color="rgb(171, 114, 16)"></a-box>
-            <a-box position="-1.24 0.5 0" scale="3 1 1" rotation="0 -20 0" color="rgb(171, 114, 16)"></a-box>
-        </a-entity>
+        <a-plane position="0 0 5" height="30" width="40" rotation="-90 0 0" color="#bfd2d0"></a-plane>
 
-        <!-- Room -->
-        <a-entity>
-            <!-- Floor -->
-            <a-plane position="0 0 5" height="30" width="40" rotation="-90 0 0" color="#bfd2d0"></a-plane>
-            <!-- Walls -->
-            <a-plane position="0 5 20" height="10" width="40" rotation="0 -180 0" color="#8e8e8e"></a-plane>
-            <a-plane position="0 5 -10" height="10" width="40" rotation="0 0 0" color="#8e8e8e"></a-plane>
-            <a-plane position="20 5 5" height="10" width="30" rotation="0 -90 0" color="#8e8e8e"></a-plane>
-            <a-plane position="-20 5 5" height="10" width="30" rotation="0 90 0" color="#8e8e8e"></a-plane>
-        </a-entity>
-
-        <!-- Default lighting injected by A-Frame. -->
         <a-entity light="type: ambient; color: #BBB"></a-entity>
         <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="-3 5 0"></a-entity>
         <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="3 5 0"></a-entity>
+
+        <a-sky color="#378ead"></a-sky>
     </a-scene>
 
 
@@ -73,84 +52,24 @@
 
             var scene = d3.select("a-scene");
 
-            // Global statics
-            var blockX = 0,
-                blockCount = 0;
-
-            // Global vars
-            var rowHeight = 0.4,
-                blockAdd = 1.5,
-                radiusBase = 10;
-                radiusAdd = 1.5;
-
-
-            var boxes = scene
-                .selectAll("a-object-model.person")
+            var persons = scene
+                .selectAll("a-entity.person")
                 .data(dataAmount)
                 .enter()
-                .append("a-object-model")
+                .append("a-entity")
                 .classed("person", true)
                 .attrs({ // New attrs
                     position: function(d, i) {
-                        var radius = radiusBase;
-                        var theta = (blockX / 72) * (2 * Math.PI);
-
-
-                        blockCount++;
-
-
-                        // Reset counter after each row;
-                        if (blockCount > 5) { blockCount = 0; }
-
-                        // Move one to the side
-                        if (blockCount === 0) {
-                            blockX += blockAdd;
-                        }
-
-                        switch (blockCount) {
-                            case 1:
-                                radius = radiusBase+radiusAdd;
-                                y = rowHeight;
-                                break;
-                            case 2:
-                                radius = radiusBase+(radiusAdd*2);
-                                y = rowHeight*2;
-                                break;
-                            case 3:
-                                radius = radiusBase+(radiusAdd*3);
-                                y = rowHeight*3;
-                                break;
-                            case 4:
-                                radius = radiusBase+(radiusAdd*4);
-                                y = rowHeight*4;
-                                break;
-                            case 5:
-                                radius = radiusBase+(radiusAdd*5);
-                                y = rowHeight*5;
-                                break;
-                            case 0:
-                                radius = radiusBase+(radiusAdd*6);
-                                y = rowHeight*6;
-                                break;
-                        }
-
-                        x = radius * Math.cos(theta);
-                        z = radius * Math.sin(theta);
+                        x = i*2;
+                        y = 1;
+                        z = -4;
 
                         return x + " " + y + " " + z;
                     },
 
-                    rotation: function(d,i) {
-                        var x = 0;
-                        var y = 180 * -i/150;
-                        var z = 0;
-
-                        return x + " " + y + " " + z
-                    },
-
-                    src: function(d, i) {
-                        return "#person";
-                    },
+                    "obj-model": function(d, i) {
+                        return "obj: #person";
+                    }
                 })
         });
     </script>
