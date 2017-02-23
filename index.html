@@ -12,34 +12,6 @@
     <style>
         body { margin: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; }
     </style>
-
-    <script type="text/javascript">
-        // Component to change to random color on click.
-        AFRAME.registerComponent('cursor-listener', {
-            init: function () {
-
-                var elem = document.getElementById("changecamera");
-                var state = "ground";
-
-                this.el.addEventListener('click', function (evt) {
-
-                    if (state == "air") {
-                        elem.setAttribute('position', "0 1.8 -1");
-                        elem.setAttribute('rotation', "0 -180 0");
-                        state = "ground";
-                        console.log(changecamera);
-                    } else {
-                        elem.setAttribute('position', "0 19 -1");
-                        elem.setAttribute('rotation', "-50 -180 0");
-                        state = "air";
-                        console.log(changecamera);
-                    }
-
-                    console.log('I was clicked at: ', evt.detail.intersection.point);
-                });
-            }
-        });
-    </script>
 </head>
 
 <body>
@@ -179,10 +151,8 @@
         <a-sky color="#afafaf"></a-sky>
     </a-scene>
 
-
     <script>
-        // Load datasheet
-        d3.csv("data.csv", function(error, data) {
+        d3.csv("data.csv", function(error, data) { // Load datasheet
             // Global vars
             var rowAdd = 1.5, // Aantal dat per rij wordt toegevoegd
                 radiusAdd = 1.5; // Hoeveelheid die wordt toegevoegd
@@ -199,6 +169,9 @@
                 cubeHeight = 0.1,
                 cubeBaseRadius = 10;
 
+            // Colors
+            var colors = ["#ffcc00","#e1b600","#f39200","#ce7c00","#e94c0a","#b23d02","#af0e80","#82045e","#0058b8","#163a72","#00a1cd","#0581a2","#53a31d","#488225","#afcb05","#899d0c"];
+
             // Empty Array that loads the data from the CSV
             var dataAmount = [];
             for(i=0; i<parseInt(data[0].age1825); i++){ dataAmount.push(0); }
@@ -207,7 +180,6 @@
             for(i=0; i<parseInt(data[0].age65plus); i++){ dataAmount.push(3); }
 
             var scene = d3.select("a-scene");
-
             var person = scene
                 .selectAll("a-entity#poppert")
                 .data(dataAmount)
@@ -216,46 +188,20 @@
                 .classed("person", true)
                 .attrs({ // New attrs
                     "mixin": "poppert",
-
                     position: function(d, i) {
                         var radius = personBaseRadius;
                         var theta = (personX / 72) * (2 * Math.PI);
-
                         personCounter++;
-
-                        // Reset counter after each row;
-                        if (personCounter > 5) { personCounter = 0; }
-
-                        // Move one to the side
-                        if (personCounter === 0) {
-                            personX += rowAdd;
-                        }
+                        if (personCounter > 5) { personCounter = 0; } // Reset counter after each row;
 
                         switch (personCounter) {
-                            case 1:
-                                radius = personBaseRadius+radiusAdd;
-                                y = personHeight;
-                                break;
-                            case 2:
-                                radius = personBaseRadius+(radiusAdd*2);
-                                y = personHeight*2;
-                                break;
-                            case 3:
-                                radius = personBaseRadius+(radiusAdd*3);
-                                y = personHeight*3;
-                                break;
-                            case 4:
-                                radius = personBaseRadius+(radiusAdd*4);
-                                y = personHeight*4;
-                                break;
-                            case 5:
-                                radius = personBaseRadius+(radiusAdd*5);
-                                y = personHeight*5;
-                                break;
+                            case 1: case 2: case 3: case 4: case 5:
+                                radius = personBaseRadius + (radiusAdd * personCounter);
+                                y = personHeight * personCounter; break;
                             case 0:
                                 radius = personBaseRadius+(radiusAdd*6);
                                 y = personHeight*6;
-                                break;
+                                personX += rowAdd; break; // Move one to the side
                         }
 
                         x = radius * Math.cos(theta);
@@ -263,7 +209,6 @@
 
                         return x + " " + y + " " + z;
                     },
-
                     rotation: function(d,i) {
                         var x = 0;
                         var y = (180 * -i/150) + 90;
@@ -271,22 +216,15 @@
 
                         return x + " " + y + " " + z
                     },
-
                     material: function(d, i) {
-                        if (d==0) {
-                            return "color:red";
-                        } else if (d==1) {
-                            return "color:blue";
-                        } else if (d==2) {
-                            return "color:green";
-                        } else if (d==3) {
-                            return "color:orange";
-                        } else {
-                            return "color:grey";
+                        switch (d) {
+                            case 0: return "color:" + colors[0]; break;
+                            case 1: return "color:" + colors[6]; break;
+                            case 2: return "color:" + colors[8]; break;
+                            case 3: return "color:" + colors[12]; break;
                         }
                     }
                 });
-
             var boxes = scene
                 .selectAll("a-box.zetel")
                 .data(dataAmount)
@@ -297,42 +235,17 @@
                     position: function(d, i) {
                         var radius = cubeBaseRadius;
                         var theta = (cubeX / 72) * (2 * Math.PI);
-
                         cubeCounter++;
-
-                        // Reset counter after each row;
-                        if (cubeCounter > 5) { cubeCounter = 0; }
-
-                        // Move one to the side
-                        if (cubeCounter === 0) {
-                            cubeX += rowAdd;
-                        }
+                        if (cubeCounter > 5) { cubeCounter = 0; } // Reset counter after each row;
 
                         switch (cubeCounter) {
-                            case 1:
-                                radius = cubeBaseRadius+radiusAdd;
-                                y = cubeHeight;
-                                break;
-                            case 2:
-                                radius = cubeBaseRadius+(radiusAdd*2);
-                                y = cubeHeight*2;
-                                break;
-                            case 3:
-                                radius = cubeBaseRadius+(radiusAdd*3);
-                                y = cubeHeight*3;
-                                break;
-                            case 4:
-                                radius = cubeBaseRadius+(radiusAdd*4);
-                                y = cubeHeight*4;
-                                break;
-                            case 5:
-                                radius = cubeBaseRadius+(radiusAdd*5);
-                                y = cubeHeight*5;
-                                break;
+                            case 1: case 2: case 3: case 4: case 5:
+                                y = cubeHeight * cubeCounter;
+                                radius = cubeBaseRadius + (radiusAdd * cubeCounter); break;
                             case 0:
-                                radius = cubeBaseRadius+(radiusAdd*6);
-                                y = cubeHeight*6;
-                                break;
+                                y = cubeHeight * 6;
+                                radius = cubeBaseRadius + (radiusAdd * 6);
+                                cubeX += rowAdd; break; // Move one to the side
                         }
 
                         x = radius * Math.cos(theta);
@@ -340,7 +253,6 @@
 
                         return x + " " + y + " " + z;
                     },
-
                     rotation: function(d,i) {
                         var x = 0;
                         var y = 180 * -i/144;
@@ -348,59 +260,49 @@
 
                         return x + " " + y + " " + z
                     },
-
                     height: function(d, i) {
+                        var newHeight, height = 0.4;
                         cubeCounter++;
-
-                        // Reset counter after each row;
-                        if (cubeCounter > 5) { cubeCounter = 0; }
-
-                        // Move one to the side
-                        if (cubeCounter === 0) {
-                            cubeX += rowAdd;
-                        }
-
-                        var newHeight,
-                            height = 0.4;
+                        if (cubeCounter > 5) { cubeCounter = 0; } // Reset counter after each row;
 
                         switch (cubeCounter) {
-                            case 1:
-                                newHeight = height;
-                                break;
-                            case 2:
-                                newHeight = height * 2;
-                                break;
-                            case 3:
-                                newHeight = height * 3;
-                                break;
-                            case 4:
-                                newHeight = height * 4;
-                                break;
-                            case 5:
-                                newHeight = height * 5;
-                                break;
-                            case 0:
-                                newHeight = height * 6;
-                                break;
+                            case 1: case 2: case 3: case 4: case 5: newHeight = height * cubeCounter; break;
+                            case 0: newHeight = height * 6; cubeX += rowAdd; break;
                         }
 
                         return newHeight;
                     },
-
-                    color: function(d,i){
-                        if (d==0) {
-                            return "red";
-                        } else if (d==1) {
-                            return "blue";
-                        } else if (d==2) {
-                            return "green";
-                        } else if (d==3) {
-                            return "orange";
-                        } else {
-                            return "grey";
+                    material: function(d,i){
+                        switch (d) {
+                            case 0: return "color:" + colors[1]; break;
+                            case 1: return "color:" + colors[7]; break;
+                            case 2: return "color:" + colors[9]; break;
+                            case 3: return "color:" + colors[13]; break;
                         }
                     }
                 })
+        });
+    </script>
+    <script type="text/javascript">
+        // Component to change to random color on click.
+        AFRAME.registerComponent('cursor-listener', {
+            init: function () {
+                var elem = document.getElementById("changecamera");
+                var state = "ground";
+
+                this.el.addEventListener('click', function (evt) {
+                    if (state == "air") {
+                        elem.setAttribute('position', "0 1.8 -1");
+                        elem.setAttribute('rotation', "0 -180 0");
+                        state = "ground";
+                    } else {
+                        elem.setAttribute('position', "0 19 -1");
+                        elem.setAttribute('rotation', "-50 -180 0");
+                        state = "air";
+                    }
+                    // console.log('I was clicked at: ', evt.detail.intersection.point);
+                });
+            }
         });
     </script>
 </body>
