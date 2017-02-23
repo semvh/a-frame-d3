@@ -26,6 +26,7 @@
         <!-- Assets loader -->
         <a-assets>
             <a-asset-item id="person" src="build/3d-assets/3Dboy.obj"></a-asset-item>
+            <a-mixin id="poppert" obj-model="obj: #person;" material="color: #34d493" position="0 0 5"></a-mixin>
         </a-assets>
 
         <!-- Camera -->
@@ -35,7 +36,8 @@
             </a-entity>
         </a-entity>
 
-        <a-entity class="person" obj-model="obj:#person" material="color: #34d493; wireframe: false" position="0 0 5"></a-entity>
+        <!-- <a-entity class="person" obj-model="obj:#person" material="color: #34d493;" position="0 0 5"></a-entity> -->
+        <a-entity mixin="poppert"></a-entity>
 
         <!-- Table -->
         <a-entity>
@@ -85,13 +87,13 @@
 
 
             var boxes = scene
-                .selectAll("a-entity.person")
+                .selectAll("a-entity#poppert")
                 .data(dataAmount)
                 .enter()
                 .append("a-entity")
                 .classed("person", true)
                 .attrs({ // New attrs
-                    // "gltf-model": "#person",
+                    "mixin": "poppert",
 
                     position: function(d, i) {
                         var radius = radiusBase;
@@ -142,7 +144,7 @@
 
                     rotation: function(d,i) {
                         var x = 0;
-                        var y = 180 * -i/150;
+                        var y = (180 * -i/150) + 90;
                         var z = 0;
 
                         return x + " " + y + " " + z
