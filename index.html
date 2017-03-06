@@ -26,7 +26,7 @@
             <a-mixin id="wall" material="color: #ffffff; src: #wallTexture; repeat: 3 3;"></a-mixin>
             <a-mixin id="ceiling" material="color: #000458; src: #wallTexture; repeat: 8 8;"></a-mixin>
             <a-mixin id="floor" material="color: #dfdfdf; src: #carpetTexture; repeat: 30 30;"></a-mixin>
-            <a-mixin id="poppert" obj-model="obj: #person;" position="0 0 5"></a-mixin>
+            <a-mixin id="person" obj-model="obj: #person;" position="0 0 5"></a-mixin>
         </a-assets>
 
         <!-- Camera -->
@@ -39,8 +39,7 @@
             </a-entity>
         </a-entity>
 
-        <!-- <a-entity class="person" obj-model="obj:#person" material="color: #34d493;" position="0 0 5"></a-entity> -->
-        <a-entity mixin="poppert"></a-entity>
+        <a-entity mixin="person"></a-entity>
 
         <!-- Table -->
         <a-entity>
@@ -52,17 +51,10 @@
         <a-entity cursor-listener>
             <a-box position="0 1.025 0.4" scale="0.7 0.05 0.5" rotation="0 0 0" color="gray"></a-box>
 
-            <!-- Screen -->
-            <!-- <a-box position="0 1.28 0.64" scale="0.65 0.045 0.40" rotation="83.08 179.91 179.91" color="black"></a-box> -->
-
             <a-entity position="0 1.25 0.65" rotation="9 0 0">
 
                 <a-box  scale="0.7 0.05 0.5" color="gray" rotation="90 0 0"></a-box>
                 <a-video src="#verkiezingen" width="0.65" height="0.4" position="0 0.025 -0.026" rotation="0 180 0"></a-video>
-
-                <!-- <a-entity rotation="0 180 0" position="-0.05 -.75 -0.83" scale="0.4 0.4 0.4">
-                    <a-entity video-controls="src:#heya"></a-entity>
-                </a-entity> -->
 
             </a-entity>
 
@@ -125,6 +117,7 @@
             <a-box position="-0.240 1.05 0.26" scale="0.05 0.01 0.05" rotation="0 0 0" color="#f1f1f1"></a-box>
             <a-box position="-0.300 1.05 0.26" scale="0.05 0.01 0.05" rotation="0 0 0" color="#f1f1f1"></a-box>
 
+            <!-- Laptop comes forward -->
             <!-- <a-animation begin="mouseenter"  attribute="position" to="0 0 -0.2" direction="alternate" dur="500" repeat="0"></a-animation> -->
         </a-entity>
 
@@ -181,13 +174,13 @@
 
             var scene = d3.select("a-scene");
             var person = scene
-                .selectAll("a-entity#poppert")
+                .selectAll("a-entity#person")
                 .data(dataAmount)
                 .enter()
                 .append("a-entity")
                 .classed("person", true)
                 .attrs({ // New attrs
-                    "mixin": "poppert",
+                    "mixin": "person",
                     position: function(d, i) {
                         var radius = personBaseRadius;
                         var theta = (personX / 72) * (2 * Math.PI);
@@ -226,11 +219,11 @@
                     }
                 });
             var boxes = scene
-                .selectAll("a-box.zetel")
+                .selectAll("a-box.seat")
                 .data(dataAmount)
                 .enter()
                 .append("a-box")
-                .classed("zetel", true)
+                .classed("seat", true)
                 .attrs({ // New attrs
                     position: function(d, i) {
                         var radius = cubeBaseRadius;
