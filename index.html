@@ -12,6 +12,38 @@
     <style>
         body { margin: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; }
     </style>
+
+    <script type="text/javascript">
+        // Component to change to random color on click.
+        AFRAME.registerComponent('laptop-cl', {
+            init: function () {
+                var elem = document.getElementById("changecamera");
+                var state = "ground";
+
+                this.el.addEventListener('click', function (evt) {
+                    if (state == "air") {
+                        elem.setAttribute('position', "0 1.8 -1");
+                        elem.setAttribute('rotation', "0 -180 0");
+                        state = "ground";
+                    } else {
+                        elem.setAttribute('position', "0 19 -1");
+                        elem.setAttribute('rotation', "-50 -180 0");
+                        state = "air";
+                    }
+                    // console.log('I was clicked at: ', evt.detail.intersection.point);
+                });
+            }
+        });
+
+        // Component to change to random color on click.
+        AFRAME.registerComponent('cl-1998', {
+            init: function () {
+                this.el.addEventListener('click', function (evt) {
+                    // Hier de functie
+                });
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -21,7 +53,7 @@
             <a-asset-item id="person" src="build/3d-assets/3Dboy.obj"></a-asset-item>
             <img id="carpetTexture" src="build/img/carpet.jpg">
             <img id="wallTexture" src="build/img/wall.png">
-            <video id="verkiezingen" src="build/video/verkiezingen.mp4">
+            <!-- <video id="verkiezingen" src="build/video/verkiezingen.mp4"> -->
 
             <a-mixin id="wall" material="color: #ffffff; src: #wallTexture; repeat: 3 3;"></a-mixin>
             <a-mixin id="ceiling" material="color: #000458; src: #wallTexture; repeat: 8 8;"></a-mixin>
@@ -41,6 +73,24 @@
 
         <a-entity mixin="person"></a-entity>
 
+        <!-- Buttons -->
+
+
+        <a-box cl-1998 position="9 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
+        <a-entity position="9 6 19" rotation="0 180 0" text="align: center; width: 12; value: 1998;"></a-entity>
+        <a-box cl-2002 position="6 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
+        <a-entity position="6 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2002;"></a-entity>
+        <a-box cl-2003 position="3 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
+        <a-entity position="3 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2003;"></a-entity>
+        <a-box cl-2006 position="0 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
+        <a-entity position="0 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2006;"></a-entity>
+        <a-box cl-2010 position="-3 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
+        <a-entity position="-3 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2010;"></a-entity>
+        <a-box cl-2012 position="-6 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
+        <a-entity position="-6 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2012;"></a-entity>
+        <a-box cl-2016 position="-9 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
+        <a-entity position="-9 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2016;"></a-entity>
+
         <!-- Table -->
         <a-entity>
             <a-box position="1.24 0.5 0" scale="3 1 1" rotation="0 20 0" color="rgb(171, 114, 16)"></a-box>
@@ -48,7 +98,7 @@
         </a-entity>
 
         <!-- Laptop -->
-        <a-entity cursor-listener>
+        <a-entity laptop-cl>
             <a-box position="0 1.025 0.4" scale="0.7 0.05 0.5" rotation="0 0 0" color="gray"></a-box>
 
             <a-entity position="0 1.25 0.65" rotation="9 0 0">
@@ -167,10 +217,10 @@
 
             // Empty Array that loads the data from the CSV
             var dataAmount = [];
-            for(i=0; i<parseInt(data[0].age1825); i++){ dataAmount.push(0); }
-            for(i=0; i<parseInt(data[0].age2545); i++){ dataAmount.push(1); }
-            for(i=0; i<parseInt(data[0].age4565); i++){ dataAmount.push(2); }
-            for(i=0; i<parseInt(data[0].age65plus); i++){ dataAmount.push(3); }
+            for(i=0; i<parseInt(data[7].age1825); i++){ dataAmount.push(0); }
+            for(i=0; i<parseInt(data[7].age2545); i++){ dataAmount.push(1); }
+            for(i=0; i<parseInt(data[7].age4565); i++){ dataAmount.push(2); }
+            for(i=0; i<parseInt(data[7].age65plus); i++){ dataAmount.push(3); }
 
             var scene = d3.select("a-scene");
             var person = scene
@@ -274,28 +324,6 @@
                         }
                     }
                 })
-        });
-    </script>
-    <script type="text/javascript">
-        // Component to change to random color on click.
-        AFRAME.registerComponent('cursor-listener', {
-            init: function () {
-                var elem = document.getElementById("changecamera");
-                var state = "ground";
-
-                this.el.addEventListener('click', function (evt) {
-                    if (state == "air") {
-                        elem.setAttribute('position', "0 1.8 -1");
-                        elem.setAttribute('rotation', "0 -180 0");
-                        state = "ground";
-                    } else {
-                        elem.setAttribute('position', "0 19 -1");
-                        elem.setAttribute('rotation', "-50 -180 0");
-                        state = "air";
-                    }
-                    // console.log('I was clicked at: ', evt.detail.intersection.point);
-                });
-            }
         });
     </script>
 </body>
