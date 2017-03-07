@@ -19,7 +19,7 @@ function init(entry) {
         var dataAmount = [];
 
         // Colors
-        var colors = ["#ffcc00","#e1b600","#f39200","#ce7c00","#e94c0a","#b23d02","#af0e80","#82045e","#0058b8","#163a72","#00a1cd","#0581a2","#53a31d","#488225","#afcb05","#899d0c"];
+        var colors = ["#ffcc00","#e1b600","#f39200","#ce7c00","#e94c0a","#b23d02","#af0e80","#82045e","#0058b8","#163a72","#00a1cd","#0581a2","#53a31d","#488225","#afcb05","#899d0c","#271d6c"];
 
         // Empty Array that loads the data from the CSV
         for(i=0; i<parseInt(data[entry].age1830); i++){ dataAmount.push(0); }
