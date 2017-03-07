@@ -33,6 +33,7 @@
             <a-mixin id="desk" material="color: #dfdfdf; src: #woodTexture; repeat: 1 1;"></a-mixin>
             <a-mixin id="person" obj-model="obj: #person;" position="0 0 5"></a-mixin>
             <a-mixin id="buttonblock" scale="2 2 0.1" material="color: #3b3b3b"></a-mixin>
+            <a-mixin id="buttonHighlight" scale="2.2 2.2 0.2" material="color: #00a1cd"></a-mixin>
             <a-mixin id="jumpcircle" geometry="primitive: circle; radius: 1" rotation="-90 0 0" material="src: #carpetTexture; color: #00a1cd;"></a-mixin>
         </a-assets>
 
@@ -74,7 +75,7 @@
                 <a-box mixin="buttonblock" id="3" position="0 0 0"></a-box>
                 <a-box mixin="buttonblock" id="2" position="-3 0 0"></a-box>
                 <a-box mixin="buttonblock" id="1" position="-6 0 0"></a-box>
-                <a-box mixin="buttonblock" id="0" position="-9 0 0"></a-box>
+                <a-box mixin="buttonHighlight" id="0" position="-9 0 0"></a-box>
             </a-entity>
         </a-entity>
 
