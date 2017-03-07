@@ -73,11 +73,24 @@ AFRAME.registerComponent('top-pos', {
     }
 });
 
-// Component to change to random color on click.
+// Component to change to highlight selected button.
 AFRAME.registerComponent('cursor-listener', {
     init: function () {
         this.el.addEventListener('click', function (evt) {
-            var getId = evt.srcElement.id;
+            var buttonList = this.children,
+                buttonClicked = evt.target,
+                getId = evt.srcElement.id;
+
+            for (var i = buttonList.length - 1; i >= 0; i -= 1) {
+                if (buttonList[i] === buttonClicked) {
+                    buttonClicked.setAttribute('material', 'color', "#00a1cd");
+                    buttonClicked.setAttribute('scale', "2.2 2.2 0.2");
+                } else {
+                    buttonList[i].setAttribute('material', 'color', "#3b3b3b");
+                    buttonList[i].setAttribute('scale', "2 2 0.1");
+                }
+            }
+
             cleanScene(getId);
         });
     }
