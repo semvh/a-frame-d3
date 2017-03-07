@@ -24,16 +24,19 @@
             <a-asset-item id="person" src="build/3d-assets/3Dboy.obj"></a-asset-item>
             <img id="carpetTexture" src="build/img/carpet.jpg">
             <img id="wallTexture" src="build/img/wall.png">
+            <img id="woodTexture" src="build/img/wood.jpg">
             <!-- <video id="verkiezingen" src="build/video/verkiezingen.mp4"> -->
 
             <a-mixin id="wall" material="color: #ffffff; src: #wallTexture; repeat: 3 3;"></a-mixin>
             <a-mixin id="ceiling" material="color: #dfdfdf; src: #wallTexture; repeat: 8 8;"></a-mixin>
             <a-mixin id="floor" material="color: #dfdfdf; src: #carpetTexture; repeat: 30 30;"></a-mixin>
+            <a-mixin id="desk" material="color: #dfdfdf; src: #woodTexture; repeat: 1 1;"></a-mixin>
             <a-mixin id="person" obj-model="obj: #person;" position="0 0 5"></a-mixin>
+            <a-mixin id="buttonblock" scale="2 2 0.1" material="color: #3b3b3b"></a-mixin>
         </a-assets>
 
         <!-- Camera -->
-        <a-entity id="changecamera" position="0 1.70 -1" rotation="0 -180 0">
+        <a-entity id="dont-changecamera" position="0 1.70 -1" rotation="0 -180 0">
             <a-entity camera="" look-controls="" wasd-controls="fly: false; acceleration: 50; easing: 10;">
                 <a-entity position="0 0 -1"
                             geometry="primitive: ring; radiusInner: 0.2; radiusOuter: 0.3"
@@ -45,33 +48,39 @@
             </a-entity>
         </a-entity>
 
-        <a-entity mixin="person">
-            <a-animation attribute="position" from="0 0 5" to="2 0 1.2" dur="9000"></a-animation>
-            <a-animation attribute="rotation" from="0 0 0" to="0 20 0" dur="9000"></a-animation>
-        </a-entity>
+        <!-- <a-entity mixin="person">
+            <a-animation attribute="position" from="0 0 5" to="2 0 1.3" dur="9000"></a-animation>
+            <a-animation attribute="rotation" from="0 0 0" to="0 40 0" dur="9000"></a-animation>
+        </a-entity> -->
 
         <!-- Buttons -->
 
+        <a-entity position="0 8 19.9">
 
-        <a-box cursor-listener id="6" position="9 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
-        <a-entity position="9 6 19" rotation="0 180 0" text="align: center; width: 12; value: 1998;"></a-entity>
-        <a-box cursor-listener id="5" position="6 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
-        <a-entity position="6 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2002;"></a-entity>
-        <a-box cursor-listener id="4" position="3 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
-        <a-entity position="3 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2003;"></a-entity>
-        <a-box cursor-listener id="3" position="0 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
-        <a-entity position="0 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2006;"></a-entity>
-        <a-box cursor-listener id="2" position="-3 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
-        <a-entity position="-3 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2010;"></a-entity>
-        <a-box cursor-listener id="1" position="-6 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
-        <a-entity position="-6 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2012;"></a-entity>
-        <a-box cursor-listener id="0" position="-9 8 19" scale="2 2 2" rotation="0 0 0" color="#ff0000"></a-box>
-        <a-entity position="-9 6 19" rotation="0 180 0" text="align: center; width: 12; value: 2016;"></a-entity>
+            <a-entity rotation="0 180 0">
+                <a-entity position="9 -2 0" text="align: center; width: 12; value: 1998;"></a-entity>
+                <a-entity position="6 -2 0" text="align: center; width: 12; value: 2002;"></a-entity>
+                <a-entity position="3 -2 0" text="align: center; width: 12; value: 2003;"></a-entity>
+                <a-entity position="0 -2 0" text="align: center; width: 12; value: 2006;"></a-entity>
+                <a-entity position="-3 -2 0" text="align: center; width: 12; value: 2010;"></a-entity>
+                <a-entity position="-6 -2 0" text="align: center; width: 12; value: 2012;"></a-entity>
+                <a-entity position="-9 -2 0" text="align: center; width: 12; value: 2016;"></a-entity>
+            </a-entity>
 
-        <!-- Table -->
+            <a-entity position="0 0 0" cursor-listener>
+                <a-box mixin="buttonblock" id="6" position="9 0 0"></a-box>
+                <a-box mixin="buttonblock" id="5" position="6 0 0"></a-box>
+                <a-box mixin="buttonblock" id="4" position="3 0 0"></a-box>
+                <a-box mixin="buttonblock" id="3" position="0 0 0"></a-box>
+                <a-box mixin="buttonblock" id="2" position="-3 0 0"></a-box>
+                <a-box mixin="buttonblock" id="1" position="-6 0 0"></a-box>
+                <a-box mixin="buttonblock" id="0" position="-9 0 0"></a-box>
+            </a-entity>
+        </a-entity>
+        <!-- Desk -->
         <a-entity>
-            <a-box position="1.24 0.5 0" scale="3 1 1" rotation="0 20 0" color="rgb(171, 114, 16)"></a-box>
-            <a-box position="-1.24 0.5 0" scale="3 1 1" rotation="0 -20 0" color="rgb(171, 114, 16)"></a-box>
+            <a-box mixin="desk" position="0 0.5 0.5" scale="4 1 1" rotation="0 0 0" color="rgb(171, 114, 16)"></a-box>
+            <!-- <a-box position="-1.24 0.5 0" scale="3 1 1" rotation="0 -20 0" color="rgb(171, 114, 16)"></a-box> -->
         </a-entity>
 
         <!-- Laptop -->
@@ -169,6 +178,10 @@
 
             <a-entity light="type: spot; intensity: 1; distance: 50; angle: 10" position="0 10 6">
                 <a-animation attribute="rotation" from="-145 0 0 " to="-48 0 0" direction="alternate" dur="8000"></a-animation>
+            </a-entity>
+
+            <a-entity light="type: spot; intensity: 1; distance: 50; angle: 10" position="0 10 6" rotation="-44.12 179.91 179.91">
+                <a-animation attribute="rotation" from="-44.12 -70 179.91" to="-44.12 -290 179.91" direction="alternate" dur="15000" repeat="infinite"></a-animation>
             </a-entity>
 
             <a-entity position="0 8 0">
