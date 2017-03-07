@@ -22,10 +22,11 @@ function init(entry) {
         var colors = ["#ffcc00","#e1b600","#f39200","#ce7c00","#e94c0a","#b23d02","#af0e80","#82045e","#0058b8","#163a72","#00a1cd","#0581a2","#53a31d","#488225","#afcb05","#899d0c"];
 
         // Empty Array that loads the data from the CSV
-        for(i=0; i<parseInt(data[entry].age1825); i++){ dataAmount.push(0); }
-        for(i=0; i<parseInt(data[entry].age2545); i++){ dataAmount.push(1); }
-        for(i=0; i<parseInt(data[entry].age4565); i++){ dataAmount.push(2); }
-        for(i=0; i<parseInt(data[entry].age65plus); i++){ dataAmount.push(3); }
+        for(i=0; i<parseInt(data[entry].age1830); i++){ dataAmount.push(0); }
+        for(i=0; i<parseInt(data[entry].age3045); i++){ dataAmount.push(1); }
+        for(i=0; i<parseInt(data[entry].age4560); i++){ dataAmount.push(2); }
+        for(i=0; i<parseInt(data[entry].age6075); i++){ dataAmount.push(3); }
+        for(i=0; i<parseInt(data[entry].age75plus); i++){ dataAmount.push(4); }
 
         var scene = d3.select("a-entity#stand");
         var person = scene
@@ -70,6 +71,7 @@ function init(entry) {
                         case 1: return "color:" + colors[6]; break;
                         case 2: return "color:" + colors[8]; break;
                         case 3: return "color:" + colors[12]; break;
+                        case 4: return "color:" + colors[4]; break;
                     }
                 }
             });
@@ -126,6 +128,7 @@ function init(entry) {
                         case 1: return "color:" + colors[7]; break;
                         case 2: return "color:" + colors[9]; break;
                         case 3: return "color:" + colors[13]; break;
+                        case 4: return "color:" + colors[5]; break;
                     }
                 }
             })
