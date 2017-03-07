@@ -14,7 +14,7 @@ AFRAME.registerComponent('laptop-cl', {
                 elem.setAttribute('rotation', "-50 -180 0");
                 state = "air";
             }
-            // console.log('I was clicked at: ', evt.detail.intersection.point);
+            console.log('I was clicked at: ', evt.detail.intersection.point);
         });
     }
 });

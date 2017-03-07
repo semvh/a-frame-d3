@@ -27,7 +27,7 @@
             <!-- <video id="verkiezingen" src="build/video/verkiezingen.mp4"> -->
 
             <a-mixin id="wall" material="color: #ffffff; src: #wallTexture; repeat: 3 3;"></a-mixin>
-            <a-mixin id="ceiling" material="color: #000458; src: #wallTexture; repeat: 8 8;"></a-mixin>
+            <a-mixin id="ceiling" material="color: #dfdfdf; src: #wallTexture; repeat: 8 8;"></a-mixin>
             <a-mixin id="floor" material="color: #dfdfdf; src: #carpetTexture; repeat: 30 30;"></a-mixin>
             <a-mixin id="person" obj-model="obj: #person;" position="0 0 5"></a-mixin>
         </a-assets>
@@ -45,7 +45,10 @@
             </a-entity>
         </a-entity>
 
-        <a-entity mixin="person"></a-entity>
+        <a-entity mixin="person">
+            <a-animation attribute="position" from="0 0 5" to="2 0 1.2" dur="9000"></a-animation>
+            <a-animation attribute="rotation" from="0 0 0" to="0 20 0" dur="9000"></a-animation>
+        </a-entity>
 
         <!-- Buttons -->
 
@@ -160,9 +163,41 @@
             <a-plane mixin="wall" position="-20 5 5" height="10" width="30" rotation="0 90 0"></a-plane>
 
             <!-- Default lighting injected by A-Frame. -->
-            <a-entity light="type: ambient; color: #BBB" position="0 5 -5"></a-entity>
-            <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="-3 5 0"></a-entity>
-            <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="3 5 0"></a-entity>
+            <a-entity light="type: ambient; color: #BBB" position="0 0 0">
+                <a-animation attribute="light.intensity" from="0.0" to="0.6" direction="alternate" dur="8000"></a-animation>
+            </a-entity>
+
+            <a-entity light="type: spot; intensity: 1; distance: 50; angle: 10" position="0 10 6">
+                <a-animation attribute="rotation" from="-145 0 0 " to="-48 0 0" direction="alternate" dur="8000"></a-animation>
+            </a-entity>
+
+            <a-entity position="0 8 0">
+                <a-entity light="type: point; intensity: 0.1; distance: 50; decay: 8" position="15 0 14">
+                    <a-animation attribute="light.intensity" from="0.1" to="0.8" direction="alternate" dur="6000"></a-animation>
+                </a-entity>
+
+                <a-entity light="type: point; intensity: 0.1; distance: 50; decay: 8" position="-15 0 14">
+                    <a-animation attribute="light.intensity" from="0.1" to="0.8" direction="alternate" dur="3000"></a-animation>
+                </a-entity>
+
+                <a-entity light="type: point; intensity: 0.1; distance: 50; decay: 8" position="-15 0 -5">
+                    <a-animation attribute="light.intensity" from="0.1" to="0.8" direction="alternate" dur="3000"></a-animation>
+                </a-entity>
+
+                <a-entity light="type: point; intensity: 0.1; distance: 50; decay: 8" position="15 0 -5">
+                    <a-animation attribute="light.intensity" from="0.1" to="0.8" direction="alternate" dur="3000"></a-animation>
+                </a-entity>
+
+                <a-entity light="type: point; intensity: 0.1; distance: 50; decay: 8" position=" 0 0">
+                    <a-animation attribute="light.intensity" from="0.1" to="0.8" direction="alternate" dur="3000"></a-animation>
+                </a-entity>
+
+                <a-entity light="type: point; intensity: 0.1; distance: 50; decay: 8" position="0 5 14">
+                    <a-animation attribute="light.intensity" from="0.1" to="0.8" direction="alternate" dur="4500"></a-animation>
+                </a-entity>
+            </a-entity>
+
+
         </a-entity>
 
         <a-sky color="#afafaf"></a-sky>
